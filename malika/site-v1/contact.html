@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MalikaFit — Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="with-public-header">
+  <header class="mf-header" role="banner">
+    <div class="mf-header__bar">
+      <nav class="mf-header__left" aria-label="Navigation gauche">
+        <a class="mf-header__link" href="index.html">Accueil</a>
+        <a class="mf-header__link" href="programmes.html">Programmes</a>
+        <a class="mf-header__link" href="fitness.html">Fitness</a>
+      </nav>
+      <div class="mf-header__logo">
+        <a class="mf-header__logo-link" href="index.html" aria-label="MalikaFit — accueil">
+          <img src="assets/images/logo.png" alt="">
+        </a>
+      </div>
+      <nav class="mf-header__right" aria-label="Navigation droite">
+        <a class="mf-header__link" href="transformations.html">Transformations</a>
+        <a class="mf-header__link" href="media.html">Photos &amp; Vidéos</a>
+        <a class="mf-header__link" href="vip.html">VIP</a>
+        <a class="mf-header__link mf-header__link--active" href="contact.html" aria-current="page">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main class="section contact-page">
+    <div class="container">
+      <h1 class="section-title">Reçois ton plan nutrition gratuit</h1>
+      <p class="section-subtitle">Laisse ton nom et ton email, on t’envoie le guide et on reste en contact.</p>
+      <form id="contact-form" class="contact-form" action="#" method="post">
+        <label for="nom">Nom</label>
+        <input id="nom" name="nom" type="text" required autocomplete="name">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+        <button class="btn btn-primary" type="submit">Je veux mon guide</button>
+      </form>
+    </div>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>

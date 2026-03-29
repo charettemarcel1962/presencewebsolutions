@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MalikaFit — Programmes</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="with-public-header">
+  <header class="mf-header" role="banner">
+    <div class="mf-header__bar">
+      <nav class="mf-header__left" aria-label="Navigation gauche">
+        <a class="mf-header__link" href="index.html">Accueil</a>
+        <a class="mf-header__link mf-header__link--active" href="programmes.html" aria-current="page">Programmes</a>
+        <a class="mf-header__link" href="fitness.html">Fitness</a>
+      </nav>
+      <div class="mf-header__logo">
+        <a class="mf-header__logo-link" href="index.html" aria-label="MalikaFit — accueil">
+          <img src="assets/images/logo.png" alt="">
+        </a>
+      </div>
+      <nav class="mf-header__right" aria-label="Navigation droite">
+        <a class="mf-header__link" href="transformations.html">Transformations</a>
+        <a class="mf-header__link" href="media.html">Photos &amp; Vidéos</a>
+        <a class="mf-header__link" href="vip.html">VIP</a>
+        <a class="mf-header__link" href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Programmes</h1>
+        <p class="section-subtitle">Fitness, nutrition et immersion Bootcamp — contenus pour démarrer ta transformation.</p>
+        <section class="program-grid" aria-label="Aperçu programmes">
+          <div class="card">
+            <div class="img-container">
+              <img src="assets/images/method/fitness.jpg" alt="Fitness">
+            </div>
+          </div>
+          <div class="card">
+            <div class="img-container">
+              <img src="assets/images/method/nutrition.jpg" alt="Nutrition">
+            </div>
+          </div>
+          <div class="card video">
+            <video controls playsinline>
+              <source src="assets/images/offers/Bootcamp.mp4" type="video/mp4">
+            </video>
+          </div>
+        </section>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container split">
+        <div>
+          <h2 class="section-title">Transformation 12 semaines</h2>
+          <p class="section-subtitle">Un système complet: entraînement, nutrition et suivi.</p>
+          <button class="btn btn-primary" data-nav="contact.html">Nous contacter</button>
+        </div>
+        <div class="split-media">
+          <div class="img-container img-container--tall">
+            <img src="assets/images/transformation/transfo-1.jpg" alt="Programme 12 semaines">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container split">
+        <div class="split-media">
+          <div class="img-container img-container--tall">
+            <img src="assets/images/offers/complet.jpg" alt="Compléments">
+          </div>
+        </div>
+        <div>
+          <h2 class="section-title">Boost énergie</h2>
+          <p>Plans et routines pour soutenir récupération et constance.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
