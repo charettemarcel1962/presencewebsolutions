@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Strategie & Evolution — MalikaFit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html { height: 100%; }
+
+body {
+    margin: 0 0 0 240px;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+    padding: 70px 20px 40px;
+    position: relative;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    width: 240px;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #0b0b0b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 10px;
+}
+
+.logo {
+    color: #ff4fa3;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 0.02em;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .icon svg {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255,255,255,0.6);
+    transition: fill 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 0 15px rgba(255,79,163,0.2);
+}
+
+.nav-item:hover .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item.active {
+    background: rgba(255,79,163,0.15);
+}
+
+.nav-item.active .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item .label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.lang-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 1px solid #ff4fa3;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background: #ff4fa3;
+    color: #000;
+}
+
+.fr { display: block; }
+.en { display: none; }
+
+h1 {
+    text-align: center;
+    color: #ff4fa3;
+    margin: 0 0 14px;
+}
+
+.subtitle {
+    text-align: center;
+    opacity: 0.8;
+    margin: 0 0 34px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #ff4fa3;
+    margin: 0;
+}
+
+.hero p {
+    opacity: 0.8;
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.card {
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255,79,163,0.3);
+    box-shadow: 0 0 20px rgba(255,79,163,0.15);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 40px rgba(255,79,163,0.7);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #ff4fa3;
+}
+
+.card p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.card ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.card li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.phase {
+    margin: 12px 0;
+    padding: 12px;
+    border: 1px solid rgba(255,79,163,0.25);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+}
+
+.phase-title {
+    color: #ff4fa3;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.budget {
+    margin-top: 14px;
+    font-weight: 700;
+}
+
+.final {
+    margin: 40px auto 0;
+    max-width: 1300px;
+    border: 1px solid rgba(255,79,163,0.3);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 35px rgba(255,79,163,0.25);
+    text-align: center;
+}
+
+.final h2 {
+    color: #ff4fa3;
+    margin: 0 0 16px;
+}
+
+.final p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.highlight {
+    margin-top: 22px;
+    color: #ff4fa3;
+    font-size: 20px;
+}
+
+@media (max-width: 820px) {
+    body {
+        margin: 0;
+        padding: 90px 16px 30px;
+    }
+
+    .sidebar {
+        position: static;
+        width: auto;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .sidebar nav {
+        gap: 2px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <div class="logo">MalikaFit</div>
+    <nav>
+        <a href="malikafit.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+            </span>
+            <span class="label fr">Accueil</span>
+            <span class="label en">Home</span>
+        </a>
+        <a href="bible.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <span class="label fr">Vision</span>
+            <span class="label en">Vision</span>
+        </a>
+        <a href="parametres.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span class="label fr">Parametres</span>
+            <span class="label en">Settings</span>
+        </a>
+        <a href="cahier.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13v2H8V6zm0 6h13v2H8v-2zm0 6h13v2H8v-2zM3 6h2v2H3V6zm0 6h2v2H3v-2zm0 6h2v2H3v-2z"/></svg>
+            </span>
+            <span class="label fr">Cahier</span>
+            <span class="label en">Specs</span>
+        </a>
+        <a href="strategie.html" class="nav-item active">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg>
+            </span>
+            <span class="label fr">Strategie</span>
+            <span class="label en">Strategy</span>
+        </a>
+
+        <a href="comparaison.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5V3zm9 0h-5v18h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
+            </span>
+            <span class="label fr">Comparaison</span>
+            <span class="label en">Comparison</span>
+        </a>
+
+        <a href="ecosysteme.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5zm0 9.5A1.5 1.5 0 1 0 12 8a1.5 1.5 0 0 0 0 3.5z"/></svg>
+            </span>
+            <span class="label fr">Ecosysteme</span>
+            <span class="label en">Ecosystem</span>
+        </a>
+    </nav>
+</div>
+
+<div class="lang-switch">
+    <button id="btnFR" type="button" onclick="setLang('fr')">FR</button>
+    <button id="btnEN" type="button" onclick="setLang('en')">EN</button>
+</div>
+
+<section class="hero">
+    <h1 class="fr">Tu es deja solide.<br>Maintenant, on passe au niveau superieur.</h1>
+    <h1 class="en">You are already solid.<br>Now we move to the next level.</h1>
+    <p class="fr">
+        Tu n'es pas au point de depart.<br>
+        Tu es a une etape ou tout peut accelerer.
+    </p>
+    <p class="en">
+        You are not at the starting line.<br>
+        You are at the stage where everything can accelerate.
+    </p>
+</section>
+
+<h1>
+    <span class="fr">Strategie & Evolution</span>
+    <span class="en">Strategy & Evolution</span>
+</h1>
+<p class="subtitle fr">Une vision motivante et decisionnelle pour passer au niveau superieur.</p>
+<p class="subtitle en">A motivating and decision-driving roadmap to scale your business.</p>
+
+<div class="grid">
+    <div class="card">
+        <h2><span class="fr">Ta situation aujourd'hui</span><span class="en">Your current position</span></h2>
+        <ul class="fr">
+            <li>Tu es deja une excellente vendeuse.</li>
+            <li>Tu as des clients.</li>
+            <li>Tu as une credibilite reelle.</li>
+            <li>Tu as une base solide.</li>
+        </ul>
+        <ul class="en">
+            <li>You are already a strong seller.</li>
+            <li>You already have clients.</li>
+            <li>You have real credibility.</li>
+            <li>You have a solid base.</li>
+        </ul>
+        <p class="fr">Tu as deja ce que la majorite n'a pas.</p>
+        <p class="en">You already have what most people do not have.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Ce qui te limite aujourd'hui</span><span class="en">What currently limits you</span></h2>
+        <ul class="fr">
+            <li>Ton activite repose principalement sur toi.</li>
+            <li>Ton temps est limite.</li>
+            <li>Tu n'as pas encore un systeme structure.</li>
+            <li>La croissance finit par plafonner.</li>
+        </ul>
+        <ul class="en">
+            <li>Your activity still depends mostly on you.</li>
+            <li>Your time is limited.</li>
+            <li>There is not yet a structured system.</li>
+            <li>Growth eventually hits a ceiling.</li>
+        </ul>
+        <p class="fr">Et c'est exactement ce qui empeche de passer au niveau superieur.</p>
+        <p class="en">And this is exactly what prevents moving to the next level.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Pourquoi certains vont plus loin</span><span class="en">Why some go further</span></h2>
+        <p class="fr">Certains modeles avancent plus vite car ils combinent :</p>
+        <p class="en">Some models move faster because they combine:</p>
+        <ul class="fr">
+            <li>Marketing structure</li>
+            <li>Automatisation</li>
+            <li>Acquisition continue</li>
+        </ul>
+        <ul class="en">
+            <li>Structured marketing</li>
+            <li>Automation</li>
+            <li>Continuous acquisition</li>
+        </ul>
+        <p class="fr">Certaines personnes vont plus loin, non pas parce qu'elles sont meilleures,<br>mais parce qu'elles ont construit un systeme.</p>
+        <p class="en">Some people go further, not because they are better,<br>but because they built a system.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Ton avantage</span><span class="en">Your advantage</span></h2>
+        <p class="fr">Tu as deja des fondations rares :</p>
+        <p class="en">You already have rare foundations:</p>
+        <ul class="fr">
+            <li>Relation client</li>
+            <li>Experience terrain</li>
+            <li>Credibilite</li>
+        </ul>
+        <ul class="en">
+            <li>Client relationship</li>
+            <li>Field experience</li>
+            <li>Credibility</li>
+        </ul>
+        <p class="fr">Tu as deja les bases. Il manque seulement la structure.</p>
+        <p class="en">You already have the foundations. Only the structure is missing.</p>
+        <p class="fr">Avec un systeme, tu peux aller beaucoup plus loin.</p>
+        <p class="en">With a system, you can go much further.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Le chemin</span><span class="en">The path</span></h2>
+
+        <div class="phase">
+            <div class="phase-title"><span class="fr"><strong>Phase 1 (500$-1500$)</strong></span><span class="en"><strong>Phase 1 ($500-$1500)</strong></span></div>
+            <ul class="fr">
+                <li>Structuration</li>
+                <li>CRM</li>
+                <li>Optimisation conversion</li>
+            </ul>
+            <ul class="en">
+                <li>Structure</li>
+                <li>CRM</li>
+                <li>Conversion optimization</li>
+            </ul>
+            <div class="budget"><span class="fr">Budget: 500$ a 1500$</span><span class="en">Budget: $500 to $1500</span></div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-title"><span class="fr"><strong>Phase 2 (1500$-3000$)</strong></span><span class="en"><strong>Phase 2 ($1500-$3000)</strong></span></div>
+            <ul class="fr">
+                <li>Automatisation</li>
+                <li>Emails</li>
+                <li>Suivi client</li>
+            </ul>
+            <ul class="en">
+                <li>Automation</li>
+                <li>Emails</li>
+                <li>Client follow-up</li>
+            </ul>
+            <div class="budget"><span class="fr">Budget: 1500$ a 3000$</span><span class="en">Budget: $1500 to $3000</span></div>
+        </div>
+
+        <div class="phase">
+            <div class="phase-title"><span class="fr"><strong>Phase 3 (5000$+)</strong></span><span class="en"><strong>Phase 3 ($5000+)</strong></span></div>
+            <ul class="fr">
+                <li>Acquisition</li>
+                <li>Publicite</li>
+                <li>Croissance</li>
+            </ul>
+            <ul class="en">
+                <li>Acquisition</li>
+                <li>Advertising</li>
+                <li>Growth</li>
+            </ul>
+            <div class="budget"><span class="fr">Budget: 5000$+</span><span class="en">Budget: $5000+</span></div>
+        </div>
+    </div>
+</div>
+
+<section class="final">
+    <h2 class="fr">Ce que tu es en train de construire</h2>
+    <h2 class="en">What you are building right now</h2>
+
+    <p class="fr">
+        Un systeme qui attire.<br>
+        Un systeme qui convertit.<br>
+        Un systeme qui fidelise.
+    </p>
+    <p class="en">
+        A system that attracts.<br>
+        A system that converts.<br>
+        A system that retains.
+    </p>
+
+    <p class="highlight fr">
+        Tu ne travailles plus pour chaque client.<br>
+        Tu construis un systeme qui travaille pour toi.
+    </p>
+    <p class="highlight en">
+        You no longer work for every client.<br>
+        You build a system that works for you.
+    </p>
+</section>
+
+<script>
+function setLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+}
+
+function applyLang(lang) {
+    document.querySelectorAll(".fr").forEach(el => el.style.display = (lang === "fr") ? "block" : "none");
+    document.querySelectorAll(".en").forEach(el => el.style.display = (lang === "en") ? "block" : "none");
+
+    const btnFR = document.getElementById("btnFR");
+    const btnEN = document.getElementById("btnEN");
+    if (btnFR && btnEN) {
+        btnFR.classList.remove("active");
+        btnEN.classList.remove("active");
+        if (lang === "fr") btnFR.classList.add("active");
+        else btnEN.classList.add("active");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem("lang") || "fr";
+    applyLang(lang);
+});
+</script>
+
+</body>
+</html>

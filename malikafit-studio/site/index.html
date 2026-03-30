@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MalikaFit — Accueil</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body class="page-home with-public-header">
+  <header class="mf-header" role="banner">
+    <div class="mf-header__bar">
+      <nav class="mf-header__left" aria-label="Navigation gauche">
+        <a class="mf-header__link mf-header__link--active" href="./index.html" aria-current="page">Accueil</a>
+        <a class="mf-header__link" href="./programmes.html">Programmes</a>
+        <a class="mf-header__link" href="./fitness.html">Fitness</a>
+      </nav>
+      <div class="mf-header__logo">
+        <a class="mf-header__logo-link" href="./index.html" aria-label="MalikaFit — accueil">
+          <img src="assets/images/logo.png" alt="">
+        </a>
+      </div>
+      <nav class="mf-header__right" aria-label="Navigation droite">
+        <a class="mf-header__link" href="./transformations.html">Transformations</a>
+        <a class="mf-header__link" href="./media.html">Photos &amp; Vidéos</a>
+        <a class="mf-header__link" href="./vip.html">VIP</a>
+        <a class="mf-header__link" href="./contact.html">Contact</a>
+        <a class="mf-header__link" href="../crm/malikafit.html">CRM</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <img src="assets/images/hero/hero.jpg" class="hero-bg" alt="MalikaFit — hero">
+
+      <div class="hero-content">
+        <h1>Transforme ton corps.<br>Ton énergie. Ta vie.</h1>
+        <p>Programme fitness, nutrition et bien-être conçu pour des résultats réels.</p>
+        <div class="hero-cta">
+          <button type="button" data-nav="./programmes.html">Voir les programmes</button>
+          <button type="button" data-nav="./transformations.html">Voir les transformations</button>
+        </div>
+        <a href="./contact.html" class="hero-contact-link">Prendre contact</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Tout pour ta transformation</h2>
+        <p class="section-subtitle">Découvre chaque univers de la méthode MalikaFit.</p>
+        <div class="card-grid">
+          <article class="card">
+            <div class="img-container">
+              <img src="assets/images/method/fitness.jpg" alt="Fitness">
+            </div>
+            <h3>Fitness</h3>
+            <p>Entraînements progressifs et efficaces.</p>
+          </article>
+          <article class="card">
+            <div class="img-container">
+              <img src="assets/images/method/nutrition.jpg" alt="Nutrition">
+            </div>
+            <h3>Nutrition</h3>
+            <p>Plans simples pour des résultats durables.</p>
+          </article>
+          <article class="card">
+            <div class="img-container">
+              <img src="assets/images/offers/vip.jpg" alt="VIP">
+            </div>
+            <h3>Club VIP</h3>
+            <p>Communauté, lives et suivi rapproché.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>MalikaFit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    margin-left: 240px;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+    text-align: center;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    width: 240px;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #0b0b0b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 10px;
+}
+
+.logo {
+    color: #ff4fa3;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 0.02em;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .icon svg {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255,255,255,0.6);
+    transition: fill 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 0 15px rgba(255,79,163,0.2);
+}
+
+.nav-item:hover .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item.active {
+    background: rgba(255,79,163,0.15);
+}
+
+.nav-item.active .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item .label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* SWITCH */
+.lang-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 1px solid #ff4fa3;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background: #ff4fa3;
+    color: #000;
+}
+
+/* CONTAINER */
+.wrapper {
+    padding: 40px 20px;
+}
+
+/* IMAGE */
+.dashboard {
+    max-width: 1100px;
+    margin: 0 auto 50px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(255, 79, 163, 0.25);
+}
+
+.dashboard img {
+    width: 100%;
+}
+
+/* TITRE */
+h1 {
+    margin-bottom: 40px;
+}
+
+/* LANG */
+.fr { display: block; }
+.en { display: none; }
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">MalikaFit</div>
+
+    <nav>
+
+        <a href="malikafit.html" class="nav-item active">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+            </span>
+            <span class="label fr">Accueil</span>
+            <span class="label en">Home</span>
+        </a>
+
+        <a href="bible.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <span class="label fr">Vision</span>
+            <span class="label en">Vision</span>
+        </a>
+
+        <a href="parametres.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span class="label fr">Paramètres</span>
+            <span class="label en">Settings</span>
+        </a>
+
+        <a href="cahier.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13v2H8V6zm0 6h13v2H8v-2zm0 6h13v2H8v-2zM3 6h2v2H3V6zm0 6h2v2H3v-2zm0 6h2v2H3v-2z"/></svg>
+            </span>
+            <span class="label fr">Cahier</span>
+            <span class="label en">Specs</span>
+        </a>
+
+        <a href="strategie.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg>
+            </span>
+            <span class="label fr">Strategie</span>
+            <span class="label en">Strategy</span>
+        </a>
+
+        <a href="comparaison.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5V3zm9 0h-5v18h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
+            </span>
+            <span class="label fr">Comparaison</span>
+            <span class="label en">Comparison</span>
+        </a>
+
+        <a href="ecosysteme.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5zm0 9.5A1.5 1.5 0 1 0 12 8a1.5 1.5 0 0 0 0 3.5z"/></svg>
+            </span>
+            <span class="label fr">Ecosysteme</span>
+            <span class="label en">Ecosystem</span>
+        </a>
+
+        <a href="../site/index.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+            </span>
+            <span class="label fr">Retour au site</span>
+            <span class="label en">Back to site</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<div class="lang-switch">
+    <button id="btnFR" type="button" onclick="setLang('fr')">FR</button>
+    <button id="btnEN" type="button" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="wrapper">
+
+    <div class="dashboard">
+        <img id="mainImage" src="home.png" alt="">
+    </div>
+
+    <h1>
+        <span class="fr">Espace de travail MalikaFit</span>
+        <span class="en">MalikaFit Workspace</span>
+    </h1>
+
+</div>
+
+<script>
+
+function setLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+}
+
+function applyLang(lang) {
+    document.querySelectorAll('.fr').forEach(el => el.style.display = (lang === 'fr') ? 'block' : 'none');
+    document.querySelectorAll('.en').forEach(el => el.style.display = (lang === 'en') ? 'block' : 'none');
+
+    const img = document.getElementById('mainImage');
+    if (img) {
+        img.src = (lang === 'fr') ? 'home.png' : 'home1.png';
+    }
+
+    const btnFR = document.getElementById('btnFR');
+    const btnEN = document.getElementById('btnEN');
+    if (btnFR && btnEN) {
+        btnFR.classList.remove('active');
+        btnEN.classList.remove('active');
+        if (lang === 'fr') btnFR.classList.add('active');
+        else btnEN.classList.add('active');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem("lang") || "fr";
+    applyLang(lang);
+});
+
+</script>
+
+</body>
+</html>

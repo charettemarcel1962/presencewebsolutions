@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Paramètres — MalikaFit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+html { height: 100%; }
+
+body {
+    margin: 0 0 0 240px;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+    padding: 70px 20px 40px;
+    position: relative;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    width: 240px;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #0b0b0b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 10px;
+}
+
+.logo {
+    color: #ff4fa3;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 0.02em;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .icon svg {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255,255,255,0.6);
+    transition: fill 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 0 15px rgba(255,79,163,0.2);
+}
+
+.nav-item:hover .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item.active {
+    background: rgba(255,79,163,0.15);
+}
+
+.nav-item.active .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item .label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.lang-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 1px solid #ff4fa3;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background: #ff4fa3;
+    color: #000;
+}
+
+.fr { display: block; }
+.en { display: none; }
+
+h1 {
+    text-align: center;
+    color: #ff4fa3;
+    margin-bottom: 50px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.card {
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255,79,163,0.3);
+    box-shadow: 0 0 20px rgba(255,79,163,0.15);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 30px rgba(255,79,163,0.5);
+}
+
+.card h2 {
+    color: #ff4fa3;
+}
+
+.card ul {
+    padding-left: 20px;
+}
+
+.card li {
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">MalikaFit</div>
+
+    <nav>
+
+        <a href="malikafit.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+            </span>
+            <span class="label fr">Accueil</span>
+            <span class="label en">Home</span>
+        </a>
+
+        <a href="bible.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <span class="label fr">Vision</span>
+            <span class="label en">Vision</span>
+        </a>
+
+        <a href="parametres.html" class="nav-item active">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span class="label fr">Paramètres</span>
+            <span class="label en">Settings</span>
+        </a>
+
+        <a href="cahier.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13v2H8V6zm0 6h13v2H8v-2zm0 6h13v2H8v-2zM3 6h2v2H3V6zm0 6h2v2H3v-2zm0 6h2v2H3v-2z"/></svg>
+            </span>
+            <span class="label fr">Cahier</span>
+            <span class="label en">Specs</span>
+        </a>
+
+        <a href="strategie.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg>
+            </span>
+            <span class="label fr">Strategie</span>
+            <span class="label en">Strategy</span>
+        </a>
+
+        <a href="comparaison.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5V3zm9 0h-5v18h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
+            </span>
+            <span class="label fr">Comparaison</span>
+            <span class="label en">Comparison</span>
+        </a>
+
+        <a href="ecosysteme.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5zm0 9.5A1.5 1.5 0 1 0 12 8a1.5 1.5 0 0 0 0 3.5z"/></svg>
+            </span>
+            <span class="label fr">Ecosysteme</span>
+            <span class="label en">Ecosystem</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<div class="lang-switch">
+<button id="btnFR" type="button" onclick="setLang('fr')">FR</button>
+<button id="btnEN" type="button" onclick="setLang('en')">EN</button>
+</div>
+
+<h1>
+<span class="fr">⚙️ Système de Paramètres — MalikaFit</span>
+<span class="en">⚙️ Settings System — MalikaFit</span>
+</h1>
+
+<div class="grid">
+
+<div class="card">
+<h2>
+<span class="fr">🧩 Modules & Activation</span>
+<span class="en">🧩 Modules & activation</span>
+</h2>
+<ul>
+<li><span class="fr">Activation Coaching</span><span class="en">Enable coaching</span></li>
+<li><span class="fr">Activation Nutrition</span><span class="en">Enable nutrition</span></li>
+<li><span class="fr">Activation Vidéos</span><span class="en">Enable videos</span></li>
+<li><span class="fr">Activation Paiements</span><span class="en">Enable payments</span></li>
+<li><span class="fr">Activation Calendrier</span><span class="en">Enable calendar</span></li>
+<li><span class="fr">Activation Automatisation</span><span class="en">Enable automation</span></li>
+<li><span class="fr">Activation Debug Engine</span><span class="en">Enable debug engine</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📊 Vente & Pipeline</span>
+<span class="en">📊 Sales & pipeline</span>
+</h2>
+<ul>
+<li><span class="fr">Nombre de suivis maximum</span><span class="en">Maximum follow-ups</span></li>
+<li><span class="fr">Délai entre chaque relance</span><span class="en">Delay between follow-ups</span></li>
+<li><span class="fr">Type de premier contact (appel / message)</span><span class="en">First contact type (call / message)</span></li>
+<li><span class="fr">Durée de vie d’un lead</span><span class="en">Lead lifetime</span></li>
+<li><span class="fr">Gestion des prospects perdus</span><span class="en">Lost lead handling</span></li>
+<li><span class="fr">Activation essai gratuit</span><span class="en">Enable free trial</span></li>
+<li><span class="fr">Durée de l’essai</span><span class="en">Trial duration</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">👥 Gestion Clients</span>
+<span class="en">👥 Client management</span>
+</h2>
+<ul>
+<li><span class="fr">Champs obligatoires</span><span class="en">Required fields</span></li>
+<li><span class="fr">Niveau de détail client</span><span class="en">Client detail level</span></li>
+<li><span class="fr">Historique client actif</span><span class="en">Active client history</span></li>
+<li><span class="fr">Segmentation clients</span><span class="en">Client segmentation</span></li>
+<li><span class="fr">Notes coach</span><span class="en">Coach notes</span></li>
+<li><span class="fr">Suivi progression</span><span class="en">Progress tracking</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🏋️ Coaching Fitness</span>
+<span class="en">🏋️ Fitness coaching</span>
+</h2>
+<ul>
+<li><span class="fr">Type de programme (standard / personnalisé)</span><span class="en">Program type (standard / custom)</span></li>
+<li><span class="fr">Fréquence des suivis</span><span class="en">Follow-up frequency</span></li>
+<li><span class="fr">Format contenu (texte / vidéo)</span><span class="en">Content format (text / video)</span></li>
+<li><span class="fr">Objectifs clients</span><span class="en">Client goals</span></li>
+<li><span class="fr">Mise à jour programmes</span><span class="en">Program updates</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🥗 Nutrition</span>
+<span class="en">🥗 Nutrition</span>
+</h2>
+<ul>
+<li><span class="fr">Type de plan (standard / personnalisé)</span><span class="en">Plan type (standard / custom)</span></li>
+<li><span class="fr">Nombre de repas</span><span class="en">Number of meals</span></li>
+<li><span class="fr">Suivi nutrition actif</span><span class="en">Active nutrition tracking</span></li>
+<li><span class="fr">Adaptation allergies</span><span class="en">Allergy adaptations</span></li>
+<li><span class="fr">Format livraison (PDF / app)</span><span class="en">Delivery format (PDF / app)</span></li>
+<li><span class="fr">Upsell nutrition</span><span class="en">Nutrition upsell</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🎥 Vidéos & Contenu</span>
+<span class="en">🎥 Videos & content</span>
+</h2>
+<ul>
+<li><span class="fr">Contenu gratuit / premium</span><span class="en">Free / premium content</span></li>
+<li><span class="fr">Accès membres / premium</span><span class="en">Member / premium access</span></li>
+<li><span class="fr">Prix vidéos</span><span class="en">Video pricing</span></li>
+<li><span class="fr">Organisation par programmes</span><span class="en">Organization by programs</span></li>
+<li><span class="fr">Progression vidéo</span><span class="en">Video progress</span></li>
+<li><span class="fr">Bundle contenu</span><span class="en">Content bundles</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📅 Calendrier</span>
+<span class="en">📅 Calendar</span>
+</h2>
+<ul>
+<li><span class="fr">Durée des sessions</span><span class="en">Session duration</span></li>
+<li><span class="fr">Réservation minimum</span><span class="en">Minimum booking window</span></li>
+<li><span class="fr">Annulation / pénalité</span><span class="en">Cancellation / penalty</span></li>
+<li><span class="fr">Gestion no-show</span><span class="en">No-show handling</span></li>
+<li><span class="fr">Capacité sessions</span><span class="en">Session capacity</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">💰 Paiements</span>
+<span class="en">💰 Payments</span>
+</h2>
+<ul>
+<li><span class="fr">Type abonnement</span><span class="en">Subscription type</span></li>
+<li><span class="fr">Prix configurables</span><span class="en">Configurable pricing</span></li>
+<li><span class="fr">Retard paiement toléré</span><span class="en">Late payment tolerance</span></li>
+<li><span class="fr">Suspension automatique</span><span class="en">Automatic suspension</span></li>
+<li><span class="fr">Relance automatique</span><span class="en">Automatic reminders</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🔁 Rétention</span>
+<span class="en">🔁 Retention</span>
+</h2>
+<ul>
+<li><span class="fr">Seuil inactivité</span><span class="en">Inactivity threshold</span></li>
+<li><span class="fr">Relances automatiques</span><span class="en">Automatic follow-ups</span></li>
+<li><span class="fr">Nombre de relances</span><span class="en">Number of follow-ups</span></li>
+<li><span class="fr">Alertes coach</span><span class="en">Coach alerts</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📈 Business & KPI</span>
+<span class="en">📈 Business & KPIs</span>
+</h2>
+<ul>
+<li><span class="fr">Objectif clients</span><span class="en">Client targets</span></li>
+<li><span class="fr">Objectif revenus</span><span class="en">Revenue targets</span></li>
+<li><span class="fr">Taux conversion</span><span class="en">Conversion rate</span></li>
+<li><span class="fr">Suivi performance</span><span class="en">Performance tracking</span></li>
+<li><span class="fr">Dashboard affichage</span><span class="en">Dashboard display</span></li>
+</ul>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🧠 Debug Engine</span>
+<span class="en">🧠 Debug engine</span>
+</h2>
+<ul>
+<li><span class="fr">Détection churn</span><span class="en">Churn detection</span></li>
+<li><span class="fr">Analyse erreurs</span><span class="en">Error analysis</span></li>
+<li><span class="fr">Regroupement problèmes</span><span class="en">Issue grouping</span></li>
+<li><span class="fr">Alertes système</span><span class="en">System alerts</span></li>
+</ul>
+</div>
+
+</div>
+
+<script>
+
+function setLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+}
+
+function applyLang(lang) {
+    document.querySelectorAll('.fr').forEach(el => el.style.display = (lang === 'fr') ? 'block' : 'none');
+    document.querySelectorAll('.en').forEach(el => el.style.display = (lang === 'en') ? 'block' : 'none');
+
+    const img = document.getElementById('mainImage');
+    if (img) {
+        img.src = (lang === 'fr') ? 'home.png' : 'home1.png';
+    }
+
+    const btnFR = document.getElementById('btnFR');
+    const btnEN = document.getElementById('btnEN');
+    if (btnFR && btnEN) {
+        btnFR.classList.remove('active');
+        btnEN.classList.remove('active');
+        if (lang === 'fr') btnFR.classList.add('active');
+        else btnEN.classList.add('active');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem("lang") || "fr";
+    applyLang(lang);
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PWS CRM - Control Tower System Bootstrap</title>
+  <style>
+    :root {
+      --bg-navy: #07121d;
+      --card-bg: rgba(9, 24, 39, 0.72);
+      --card-border: rgba(212, 175, 55, 0.3);
+      --text-main: #eef3fa;
+      --text-soft: #b8c4d8;
+      --gold: #d4af37;
+      --green: #22c55e;
+      --orange: #fb923c;
+      --red: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text-main);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg-navy);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20px;
+      background: url("./Image de fond.png") center/cover no-repeat;
+      filter: blur(5px) brightness(0.55) saturate(0.85);
+      transform: scale(1.06);
+      z-index: -3;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(6, 12, 20, 0.82), rgba(10, 22, 37, 0.9));
+      z-index: -2;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .glass {
+      backdrop-filter: blur(8px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 14px 38px rgba(0,0,0,0.45);
+      border-radius: 14px;
+    }
+
+    .sidebar {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .menu-item {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: var(--text-soft);
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .menu-item:hover {
+      border-color: rgba(212, 175, 55, 0.35);
+      color: #fff;
+      background: rgba(22, 44, 69, 0.45);
+    }
+
+    .menu-item.active {
+      color: #fff;
+      border-color: rgba(212, 175, 55, 0.7);
+      background: linear-gradient(90deg, rgba(212,175,55,0.2), rgba(26,43,66,0.45));
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      color: var(--text-soft);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .content {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      min-height: 74px;
+    }
+
+    .title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title h2 {
+      margin: 0;
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .title small {
+      color: var(--text-soft);
+      letter-spacing: 0.2px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .system-pill {
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      color: #9ff7be;
+      background: rgba(34, 197, 94, 0.12);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .system-pill.warn {
+      border-color: rgba(251, 146, 60, 0.55);
+      color: #ffd6a8;
+      background: rgba(251, 146, 60, 0.15);
+    }
+    .system-pill.err {
+      border-color: rgba(239, 68, 68, 0.55);
+      color: #ffc3c3;
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      border: 1px solid rgba(212,175,55,0.45);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      background: rgba(6, 16, 26, 0.62);
+    }
+
+    .mode-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--text-soft);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .mode-btn.active {
+      color: #0d1b2c;
+      background: var(--gold);
+      box-shadow: 0 4px 14px rgba(212,175,55,0.4);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 1.58fr 0.92fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .center,
+    .monitor {
+      display: grid;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .card {
+      padding: 14px;
+      min-height: 100px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px 0;
+      font-size: 15px;
+      letter-spacing: 0.3px;
+      color: #f4f8ff;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .kpi {
+      background: rgba(7, 18, 30, 0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .kpi .label {
+      color: var(--text-soft);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .kpi .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .kpi .delta {
+      font-size: 12px;
+      color: #9fe8b8;
+      margin-top: 4px;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .stage {
+      background: rgba(7, 18, 30, 0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: var(--fill, 50%);
+      background: linear-gradient(90deg, var(--gold), #f4da86);
+    }
+
+    .stage .name { color: var(--text-soft); font-size: 12px; }
+    .stage .num { font-size: 22px; font-weight: 700; margin-top: 4px; }
+    .small-meta {
+      margin-top: 3px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 9px 8px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    th { color: var(--text-soft); font-weight: 600; font-size: 12px; }
+
+    .status-badge {
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .ok { background: rgba(34,197,94,0.2); color: #95efb4; border: 1px solid rgba(34,197,94,0.4); }
+    .warn { background: rgba(251,146,60,0.2); color: #ffd1a6; border: 1px solid rgba(251,146,60,0.4); }
+    .prio { background: rgba(239,68,68,0.2); color: #ffb4b4; border: 1px solid rgba(239,68,68,0.4); }
+
+    .list {
+      display: grid;
+      gap: 9px;
+      font-size: 13px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed rgba(255,255,255,0.12);
+    }
+
+    .muted { color: var(--text-soft); font-size: 12px; }
+    .intel-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 10px;
+    }
+    .intel-pane {
+      background: rgba(7, 18, 30, 0.66);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 10px;
+      min-height: 120px;
+    }
+    .intel-pane h4 {
+      margin: 0 0 8px 0;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .mini-list {
+      display: grid;
+      gap: 7px;
+      font-size: 12px;
+    }
+    .mini-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px dashed rgba(255,255,255,0.12);
+      padding-bottom: 6px;
+    }
+    .score-chip {
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .score-high { color: #ffd0d0; border-color: rgba(239,68,68,0.45); background: rgba(239,68,68,0.18); }
+    .score-mid { color: #ffe2b8; border-color: rgba(251,146,60,0.45); background: rgba(251,146,60,0.17); }
+    .score-low { color: #bdf6cc; border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.17); }
+
+    .hide-responsable,
+    .hide-vendeur {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .mode-responsable .hide-responsable,
+    .mode-vendeur .hide-vendeur {
+      display: none;
+    }
+
+    .mode-vendeur .team-zone,
+    .mode-vendeur .dg-only {
+      display: none;
+    }
+
+    /* Phase 4 — Explicable + Debug NatCore */
+    .explain-mini-btn {
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--gold);
+      border-radius: 8px;
+      width: 26px;
+      height: 26px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .explain-mini-btn:hover { background: rgba(212, 175, 55, 0.22); }
+    .mini-item__scores, .list-item__actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .explain-hint { font-size: 11px; color: #c9d6e8; display: block; margin-top: 4px; max-width: 220px; }
+    .explain-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: flex-end;
+      pointer-events: none;
+    }
+    .explain-overlay--open {
+      display: flex;
+      pointer-events: auto;
+    }
+    .explain-overlay__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .explain-overlay__panel {
+      position: relative;
+      width: min(420px, 94vw);
+      max-height: 86vh;
+      overflow: auto;
+      margin: 14px;
+      padding: 14px 16px;
+      z-index: 1;
+      border-radius: 14px;
+    }
+    .explain-overlay__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .explain-overlay__head h3 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--gold);
+    }
+    .explain-close {
+      border: 0;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 22px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .explain-overlay__body { font-size: 13px; line-height: 1.45; }
+    .explain-breakdown { margin: 8px 0 0 0; padding-left: 18px; }
+    .explain-breakdown li { margin-bottom: 6px; }
+    .explain-pts { font-weight: 800; color: var(--gold); margin-right: 6px; }
+    .explain-empty { color: var(--text-soft); }
+    .debug-toggle {
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 30, 48, 0.75);
+      color: #cbd5e1;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .debug-toggle:hover { border-color: rgba(212, 175, 55, 0.5); color: #fff; }
+    .debug-natcore-panel {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      width: min(560px, 94vw);
+      max-height: 36vh;
+      z-index: 150;
+      display: none;
+      flex-direction: column;
+      border-radius: 12px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: rgba(7, 16, 26, 0.94);
+      box-shadow: 0 -8px 32px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    .debug-natcore-panel.debug-panel--open { display: flex; }
+    .debug-natcore-panel__bar {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .debug-natcore-pre {
+      margin: 0;
+      padding: 10px 12px;
+      overflow: auto;
+      font-size: 11px;
+      line-height: 1.35;
+      color: #a8c4e0;
+      flex: 1;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1200px) {
+      .app { grid-template-columns: 210px 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .pipeline { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    }
+
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .app { display: block; padding: 10px; height: auto; }
+      .sidebar { margin-bottom: 10px; }
+      .workspace { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .topbar-right { width: 100%; justify-content: space-between; }
+    }
+  </style>
+</head>
+<body class="mode-dg">
+  <div class="app">
+    <aside class="sidebar glass">
+      <div class="brand">
+        <img src="./logo_PWS.jpg" alt="PWS Logo" onerror="this.style.display='none'" />
+        <h1>PWS CRM</h1>
+      </div>
+      <nav class="menu" aria-label="Navigation principale">
+        <div class="menu-item active">Dashboard</div>
+        <div class="menu-item">Listes</div>
+        <div class="menu-item">Prospects</div>
+        <div class="menu-item">Activites</div>
+        <div class="menu-item">Clients</div>
+        <div class="menu-item">Commissions</div>
+        <div class="menu-item">Parametres</div>
+      </nav>
+      <div class="sidebar-footer">
+        Mode interne uniquement<br />
+        Cockpit commercial PWS
+      </div>
+    </aside>
+
+    <section class="content">
+      <header class="topbar glass">
+        <div class="title">
+          <h2>PWS CRM - Control Tower</h2>
+          <small id="modeSubtitle">Bootstrap systeme en cours...</small>
+        </div>
+        <div class="topbar-right">
+          <div class="mode-switch" role="tablist" aria-label="Switch de contexte">
+            <button class="mode-btn active" data-mode="dg">DG</button>
+            <button class="mode-btn" data-mode="responsable">Responsable</button>
+            <button class="mode-btn" data-mode="vendeur">Vendeur</button>
+          </div>
+          <button type="button" id="debugNatCoreBtn" class="debug-toggle dg-only" aria-pressed="false" title="Données brutes API + dernier calcul NatCore">Debug NatCore</button>
+          <div class="system-pill warn" id="systemStatus">Demarrage en cours...</div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="center">
+          <article class="card glass dg-only">
+            <h3>CONTROL CORE</h3>
+            <div class="kpi-grid">
+              <div class="kpi">
+                <div class="label">Prospects actifs</div>
+                <div class="value" data-kpi="prospects">--</div>
+                <div class="delta" data-delta="prospects">chargement...</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Simulations actives</div>
+                <div class="value" data-kpi="simulations">--</div>
+                <div class="delta" data-delta="simulations">chargement...</div>
+              </div>
+              <div class="kpi">
+                <div class="label">Signatures du mois</div>
+                <div class="value" data-kpi="signatures">--</div>
+                <div class="delta" data-delta="signatures">chargement...</div>
+              </div>
+              <div class="kpi">
+                <div class="label">MRR mensuel</div>
+                <div class="value" data-kpi="mrr">--</div>
+                <div class="delta" data-delta="mrr">chargement...</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <h3>PIPELINE OPERATIONNEL</h3>
+            <div class="pipeline">
+              <div class="stage" style="--fill:72%">
+                <div class="name">Prospect</div>
+                <div class="num" data-pipe="prospect">--</div>
+                <div class="small-meta" data-pipe-meta="prospect"></div>
+              </div>
+              <div class="stage" style="--fill:58%">
+                <div class="name">Simulation</div>
+                <div class="num" data-pipe="simulation">--</div>
+                <div class="small-meta" data-pipe-meta="simulation"></div>
+              </div>
+              <div class="stage" style="--fill:46%">
+                <div class="name">Suivi</div>
+                <div class="num" data-pipe="suivi">--</div>
+                <div class="small-meta" data-pipe-meta="suivi"></div>
+              </div>
+              <div class="stage" style="--fill:36%">
+                <div class="name">Signe</div>
+                <div class="num" data-pipe="signe">--</div>
+                <div class="small-meta" data-pipe-meta="signe"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="card glass">
+            <h3>LISTES ACTIVES</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Liste</th>
+                  <th>Territoire</th>
+                  <th>Volume</th>
+                  <th>Vendeur assigne</th>
+                </tr>
+              </thead>
+              <tbody id="listTableBody">
+                <tr><td colspan="4">Chargement des listes...</td></tr>
+              </tbody>
+            </table>
+          </article>
+
+          <article class="card glass">
+            <h3>INTELLIGENCE NATCORE - PRIORISATION</h3>
+            <div class="intel-grid">
+              <div class="intel-pane">
+                <h4>Prospects a traiter en premier</h4>
+                <div id="priorityList" class="mini-list">
+                  <div class="mini-item"><span>Analyse en cours...</span></div>
+                </div>
+              </div>
+              <div class="intel-pane">
+                <h4>Recommandations actionnables</h4>
+                <div id="recommendationList" class="mini-list">
+                  <div class="mini-item"><span>Generation en cours...</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <aside class="monitor">
+          <article class="card glass team-zone">
+            <h3>VENDEURS</h3>
+            <div class="list" id="teamList"><div class="list-item"><span>Chargement vendeurs...</span></div></div>
+          </article>
+
+          <article class="card glass hide-vendeur">
+            <h3>ALERTES CRM</h3>
+            <div class="list" id="alertList"><div class="list-item"><span>Calcul des alertes...</span></div></div>
+          </article>
+
+          <article class="card glass">
+            <h3>ACTIVITE RECENTE</h3>
+            <div class="list" id="activityList"><div class="list-item"><span>Chargement activite...</span></div></div>
+          </article>
+        </aside>
+      </main>
+    </section>
+  </div>
+
+  <div id="explainOverlay" class="explain-overlay" aria-hidden="true">
+    <div class="explain-overlay__backdrop" id="explainBackdrop"></div>
+    <div class="explain-overlay__panel glass" role="dialog" aria-modal="true" aria-labelledby="explainTitle">
+      <div class="explain-overlay__head">
+        <h3 id="explainTitle">Explication</h3>
+        <button type="button" id="explainClose" class="explain-close" aria-label="Fermer">&times;</button>
+      </div>
+      <div id="explainContent" class="explain-overlay__body"></div>
+    </div>
+  </div>
+
+  <div id="debugNatCorePanel" class="debug-natcore-panel" aria-hidden="true">
+    <div class="debug-natcore-panel__bar">
+      <strong>Debug NatCore</strong>
+      <span class="muted">JSON — prospects, listes, vendeurs, intelligence</span>
+    </div>
+    <pre id="debugNatCorePre" class="debug-natcore-pre"></pre>
+  </div>
+
+  <script src="./js/explain.js"></script>
+  <script src="./js/scoring.js"></script>
+  <script src="./js/alerts.js"></script>
+  <script src="./js/recommendations.js"></script>
+  <script src="./js/intelligence.js"></script>
+  <script src="./js/debugPanel.js"></script>
+
+  <script>
+    (function () {
+      const API_BASE = "http://127.0.0.1:8000/api";
+      const HEALTH_URL = "http://127.0.0.1:8000/health";
+      const BRIDGE_START_URL = "http://127.0.0.1:8732/start";
+      const RELOAD_MS = 12000;
+      const RETRIES = 12;
+      let currentMode = "dg";
+      let rawData = { prospects: [], listes: [], vendeurs: [], assignations: [], adminStats: null };
+      const modeButtons = Array.from(document.querySelectorAll(".mode-btn"));
+      const subtitle = document.getElementById("modeSubtitle");
+      const systemStatus = document.getElementById("systemStatus");
+      const teamList = document.getElementById("teamList");
+      const listTableBody = document.getElementById("listTableBody");
+      const alertList = document.getElementById("alertList");
+      const activityList = document.getElementById("activityList");
+      const priorityList = document.getElementById("priorityList");
+      const recommendationList = document.getElementById("recommendationList");
+      const explainOverlay = document.getElementById("explainOverlay");
+      const explainTitle = document.getElementById("explainTitle");
+      const explainContent = document.getElementById("explainContent");
+      const explainClose = document.getElementById("explainClose");
+      const explainBackdrop = document.getElementById("explainBackdrop");
+      const debugToggleBtn = document.getElementById("debugNatCoreBtn");
+
+      let lastIntelSnapshot = null;
+      let debugController = null;
+
+      const profileLabels = {
+        dg: "Vision globale DG - performance, territoires, risques",
+        responsable: "Vision equipe - focus execution commerciale",
+        vendeur: "Vision personnelle - mes prospects, mes suivis, mes signatures"
+      };
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      async function fetchJson(url) {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status + " on " + url);
+        }
+        return res.json();
+      }
+
+      function setSystem(text, level) {
+        systemStatus.textContent = text;
+        systemStatus.className = "system-pill " + (level || "");
+      }
+
+      async function connectBackend() {
+        setSystem("Backend en cours de connexion...", "warn");
+        for (let i = 1; i <= RETRIES; i += 1) {
+          try {
+            const res = await fetch(HEALTH_URL, { cache: "no-store" });
+            if (res.ok) {
+              setSystem("Sync OK - Live - Systeme stable", "");
+              return true;
+            }
+          } catch (_) {
+            if (i === 1) {
+              try {
+                await fetch(BRIDGE_START_URL, { method: "POST", cache: "no-store" });
+              } catch (_) {}
+            }
+          }
+          setSystem("Demarrage backend... tentative " + i + "/" + RETRIES, "warn");
+          await sleep(1500);
+        }
+        setSystem("Backend indisponible - auto-retry actif", "err");
+        return false;
+      }
+
+      async function loadConfig() {
+        setSystem("Chargement configuration systeme...", "warn");
+        return { apiBase: API_BASE };
+      }
+
+      async function loadModules(config) {
+        setSystem("Chargement modules CRM...", "warn");
+        const base = config.apiBase;
+        const [prospects, listes, vendeurs, assignations, adminStats] = await Promise.all([
+          fetchJson(base + "/prospects"),
+          fetchJson(base + "/listes"),
+          fetchJson(base + "/vendeurs"),
+          fetchJson(base + "/assignations"),
+          fetchJson(base + "/admin/stats")
+        ]);
+        rawData = { prospects, listes, vendeurs, assignations, adminStats };
+      }
+
+      function filterByMode(mode) {
+        const prospects = rawData.prospects || [];
+        const vendeurs = rawData.vendeurs || [];
+        const listes = rawData.listes || [];
+        const assignations = rawData.assignations || [];
+
+        if (mode === "dg") {
+          return { prospects, vendeurs, listes, assignations };
+        }
+
+        if (mode === "responsable") {
+          const team = vendeurs.slice(0, 2);
+          const teamIds = new Set(team.map((v) => v.id));
+          return {
+            prospects: prospects.filter((p) => !p.vendeur_id || teamIds.has(p.vendeur_id)),
+            vendeurs: team,
+            listes: listes.filter((l) => ["active", "assignée"].includes(l.statut)).slice(0, 6),
+            assignations: assignations.filter((a) => !a.vendeur_id || teamIds.has(a.vendeur_id))
+          };
+        }
+
+        const seller = vendeurs[0];
+        const sellerId = seller ? seller.id : null;
+        const vendeurProspects = sellerId
+          ? prospects.filter((p) => p.vendeur_id === sellerId)
+          : prospects.slice(0, Math.max(1, Math.ceil(prospects.length * 0.35)));
+        const vendeurAssignations = sellerId
+          ? assignations.filter((a) => a.vendeur_id === sellerId)
+          : assignations.slice(0, 3);
+        return {
+          prospects: vendeurProspects,
+          vendeurs: seller ? [seller] : [],
+          listes: listes.filter((l) => ["active", "assignée"].includes(l.statut)).slice(0, 4),
+          assignations: vendeurAssignations
+        };
+      }
+
+      function setText(selector, value) {
+        const el = document.querySelector(selector);
+        if (el) el.textContent = value;
+      }
+
+      function renderKpi(data) {
+        const prospects = data.prospects.length;
+        const simCount = data.prospects.filter((p) => p.statut_pipeline === "Simulation").length;
+        const signed = data.prospects.filter((p) => p.statut_pipeline === "Signé").length;
+        const mrr = signed * 1200;
+
+        setText('[data-kpi="prospects"]', String(prospects));
+        setText('[data-kpi="simulations"]', String(simCount));
+        setText('[data-kpi="signatures"]', String(signed));
+        setText('[data-kpi="mrr"]', mrr.toLocaleString("fr-CA") + " $");
+
+        setText('[data-delta="prospects"]', "Source: module prospects");
+        setText('[data-delta="simulations"]', "Actives en pipeline");
+        setText('[data-delta="signatures"]', "Signatures reelles");
+        setText('[data-delta="mrr"]', "Estimation basee signatures");
+      }
+
+      function renderPipeline(data) {
+        const map = { prospect: 0, simulation: 0, suivi: 0, signe: 0 };
+        data.prospects.forEach((p) => {
+          if (p.statut_pipeline === "Simulation") map.simulation += 1;
+          else if (["Contacté", "Rendez-vous", "En réflexion", "Suivi"].includes(p.statut_pipeline)) map.suivi += 1;
+          else if (p.statut_pipeline === "Signé") map.signe += 1;
+          else map.prospect += 1;
+        });
+
+        const total = Object.values(map).reduce((a, b) => a + b, 0) || 1;
+        setText('[data-pipe="prospect"]', String(map.prospect));
+        setText('[data-pipe="simulation"]', String(map.simulation));
+        setText('[data-pipe="suivi"]', String(map.suivi));
+        setText('[data-pipe="signe"]', String(map.signe));
+
+        ["prospect", "simulation", "suivi", "signe"].forEach((k) => {
+          setText('[data-pipe-meta="' + k + '"]', Math.round((map[k] / total) * 100) + "%");
+        });
+      }
+
+      function renderListes(data) {
+        if (!data.listes.length) {
+          listTableBody.innerHTML = "<tr><td colspan='4'>Aucune liste active</td></tr>";
+          return;
+        }
+        const html = data.listes.slice(0, 6).map((l, idx) => {
+          const vendeur = data.vendeurs[idx % Math.max(1, data.vendeurs.length)];
+          const vendeurName = vendeur ? (vendeur.nom_affichage || (vendeur.prenom + " " + vendeur.nom)) : "Non assigne";
+          const volume = l.nb_prospects || 0;
+          return "<tr><td>" + (l.nom_liste || "Liste") + "</td><td>" + (l.region || "-") + "</td><td>" + volume + "</td><td>" + vendeurName + "</td></tr>";
+        }).join("");
+        listTableBody.innerHTML = html;
+      }
+
+      function renderVendeurs(data) {
+        if (!data.vendeurs.length) {
+          teamList.innerHTML = "<div class='list-item'><span>Aucun vendeur disponible</span></div>";
+          return;
+        }
+        teamList.innerHTML = data.vendeurs.slice(0, 3).map((v) => {
+          const s = Number(v.signatures || 0);
+          const badge = s >= 4 ? "ok" : s >= 2 ? "warn" : "prio";
+          const txt = s >= 4 ? "OK" : s >= 2 ? "Attention" : "Priorite";
+          const name = v.nom_affichage || (v.prenom + " " + v.nom);
+          const sim = Number(v.simulations || 0);
+          return "<div class='list-item'><div><strong>" + name + "</strong><br><span class='muted'>" + sim + " simulations - " + s + " signatures</span></div><span class='status-badge " + badge + "'>" + txt + "</span></div>";
+        }).join("");
+      }
+
+      function renderActivite(data) {
+        const items = [];
+        data.assignations.slice(0, 4).forEach((a) => {
+          items.push({ text: "Assignation liste " + (a.liste_nom || a.liste_id || "-"), time: (a.date_assignation || "").slice(11, 16) || "--:--" });
+        });
+        data.prospects.slice(0, 4).forEach((p) => {
+          items.push({ text: "Prospect " + (p.nom_entreprise || p.id || "-") + " - " + (p.statut_pipeline || "Nouveau"), time: (p.date_creation || "").slice(11, 16) || "--:--" });
+        });
+        if (!items.length) {
+          activityList.innerHTML = "<div class='list-item'><span>Aucune activite recente</span></div>";
+          return;
+        }
+        activityList.innerHTML = items.slice(0, 5).map((it) =>
+          "<div class='list-item'><span>" + it.text + "</span><span class='muted'>" + it.time + "</span></div>"
+        ).join("");
+      }
+
+      function renderMode(mode) {
+        const view = filterByMode(mode);
+        subtitle.textContent = profileLabels[mode];
+        const intel = PWS.Intelligence.compute(view);
+        lastIntelSnapshot = { view: view, intel: intel };
+        if (debugController && debugController.refresh) debugController.refresh();
+        renderKpi(view);
+        renderPipeline(view);
+        renderListes(view);
+        renderVendeurs(view);
+        renderAlertes(view, intel);
+        renderActivite(view);
+        renderIntelligence(view, intel);
+      }
+
+      function closeExplain() {
+        explainOverlay.classList.remove("explain-overlay--open");
+        explainOverlay.setAttribute("aria-hidden", "true");
+      }
+
+      function openExplainPriority(idx) {
+        if (!lastIntelSnapshot) return;
+        const p = lastIntelSnapshot.intel.topPriorities[idx];
+        if (!p) return;
+        explainTitle.textContent = "Scoring — " + (p.nom_entreprise || p.id);
+        const n = lastIntelSnapshot.intel.scored.length;
+        let html =
+          "<p><strong>Traçabilité priorité :</strong> tri par score NatCore décroissant sur <strong>" +
+          n +
+          "</strong> prospect(s) dans la vue. Rang affiché : <strong>#" +
+          (idx + 1) +
+          "</strong>.</p>";
+        html +=
+          "<p>Score total : <strong>" +
+          p.intelligence.score +
+          "</strong> pts — somme des critères ci-dessous (calcul identique au tri).</p>";
+        html += PWS.Explain.formatBreakdownHtml(p.intelligence.breakdown);
+        explainContent.innerHTML = html;
+        explainOverlay.classList.add("explain-overlay--open");
+        explainOverlay.setAttribute("aria-hidden", "false");
+      }
+
+      function openExplainAlert(idx) {
+        if (!lastIntelSnapshot) return;
+        const a = lastIntelSnapshot.intel.alerts[idx];
+        if (!a || !a.explain) return;
+        explainTitle.textContent = "Alerte — traçabilité";
+        const ex = a.explain;
+        let html = "<p><strong>" + PWS.Explain.escapeHtml(a.message) + "</strong></p>";
+        html += "<p><strong>Condition :</strong> " + PWS.Explain.escapeHtml(ex.condition) + "</p>";
+        html += "<p><strong>Détail données :</strong> " + PWS.Explain.escapeHtml(ex.detail) + "</p>";
+        html +=
+          "<p><strong>Métriques (JSON) :</strong></p><pre class='debug-natcore-pre' style='max-height:120px'>" +
+          PWS.Explain.escapeHtml(JSON.stringify(ex.metrics, null, 2)) +
+          "</pre>";
+        explainContent.innerHTML = html;
+        explainOverlay.classList.add("explain-overlay--open");
+        explainOverlay.setAttribute("aria-hidden", "false");
+      }
+
+      function openExplainReco(idx) {
+        if (!lastIntelSnapshot) return;
+        const r = lastIntelSnapshot.intel.recommendations[idx];
+        if (!r || !r.explain) return;
+        explainTitle.textContent = "Recommandation — logique";
+        const ex = r.explain;
+        const text = typeof r === "string" ? r : r.text;
+        let html = "<p><strong>" + PWS.Explain.escapeHtml(text) + "</strong></p>";
+        html += "<p><strong>Logique :</strong> " + PWS.Explain.escapeHtml(ex.logic) + "</p>";
+        html += "<p><strong>Déclencheur :</strong> " + PWS.Explain.escapeHtml(ex.trigger) + "</p>";
+        html +=
+          "<p><strong>Métriques :</strong></p><pre class='debug-natcore-pre' style='max-height:120px'>" +
+          PWS.Explain.escapeHtml(JSON.stringify(ex.metrics, null, 2)) +
+          "</pre>";
+        explainContent.innerHTML = html;
+        explainOverlay.classList.add("explain-overlay--open");
+        explainOverlay.setAttribute("aria-hidden", "false");
+      }
+
+      function renderAlertes(data, intel) {
+        if (!intel.alerts.length) {
+          alertList.innerHTML = "<div class='list-item'><span>Aucune alerte critique detectee</span><span class='status-badge ok'>Stable</span></div>";
+          return;
+        }
+        alertList.innerHTML = intel.alerts
+          .slice(0, 5)
+          .map((a, idx) => {
+            const cond = a.explain ? PWS.Explain.escapeHtml(a.explain.condition) : "";
+            return (
+              "<div class='list-item list-item--explain'>" +
+              "<span>" +
+              PWS.Explain.escapeHtml(a.message) +
+              "<br><span class='muted'>" +
+              PWS.Explain.escapeHtml(a.cause) +
+              "</span>" +
+              (a.explain ? "<br><span class='explain-hint'>" + cond + "</span>" : "") +
+              "</span>" +
+              "<span class='list-item__actions'>" +
+              "<span class='status-badge " +
+              a.badge +
+              "'>" +
+              PWS.Explain.escapeHtml(a.level) +
+              "</span>" +
+              "<button type='button' class='explain-mini-btn' data-explain-type='alert' data-explain-idx='" +
+              idx +
+              "' aria-label='Explication alerte'>i</button>" +
+              "</span></div>"
+            );
+          })
+          .join("");
+      }
+
+      function renderIntelligence(data, intel) {
+        if (!intel.topPriorities.length) {
+          priorityList.innerHTML = "<div class='mini-item'><span>Aucune priorité à afficher</span></div>";
+        } else {
+          priorityList.innerHTML = intel.topPriorities
+            .map((p, idx) => {
+              const name = p.nom_entreprise || p.id;
+              const txt = p.intelligence.level + " - " + p.intelligence.score + " pts";
+              const meta = p.intelligence.staleDays + "j sans mouvement";
+              const tip = PWS.Explain.formatBreakdownLines(p.intelligence.breakdown);
+              const shortTip = tip.length > 200 ? tip.slice(0, 197) + "..." : tip;
+              const titleAttr = PWS.Explain.escapeHtml(shortTip).replace(/"/g, "&quot;");
+              return (
+                "<div class='mini-item mini-item--priority' title='" +
+                titleAttr +
+                "'>" +
+                "<span><strong>" +
+                PWS.Explain.escapeHtml(String(name)) +
+                "</strong><br><span class='muted'>" +
+                PWS.Explain.escapeHtml(meta) +
+                " - " +
+                PWS.Explain.escapeHtml(String(p.statut_pipeline || "Nouveau")) +
+                "</span></span>" +
+                "<span class='mini-item__scores'>" +
+                "<span class='score-chip " +
+                p.intelligence.css +
+                "' data-pws-score='" +
+                p.intelligence.score +
+                "'>" +
+                PWS.Explain.escapeHtml(txt) +
+                "</span>" +
+                "<button type='button' class='explain-mini-btn' data-explain-type='priority' data-explain-idx='" +
+                idx +
+                "' aria-label='Détail score'>!</button>" +
+                "</span></div>"
+              );
+            })
+            .join("");
+        }
+
+        if (!intel.recommendations.length) {
+          recommendationList.innerHTML = "<div class='mini-item'><span>Pas de recommandation critique</span></div>";
+        } else {
+          recommendationList.innerHTML = intel.recommendations
+            .slice(0, 6)
+            .map((r, idx) => {
+              const text = typeof r === "string" ? r : r.text;
+              return (
+                "<div class='mini-item'>" +
+                "<span>" +
+                PWS.Explain.escapeHtml(text) +
+                "</span>" +
+                "<button type='button' class='explain-mini-btn' data-explain-type='reco' data-explain-idx='" +
+                idx +
+                "' aria-label='Explication recommandation'>i</button>" +
+                "</div>"
+              );
+            })
+            .join("");
+        }
+      }
+
+      async function initApp() {
+        try {
+          const ok = await connectBackend();
+          if (!ok) {
+            setTimeout(initApp, 2500);
+            return;
+          }
+          const config = await loadConfig();
+          await loadModules(config);
+          renderMode(currentMode);
+          setSystem("Sync OK - Live - Systeme stable", "");
+          setTimeout(initApp, RELOAD_MS);
+        } catch (err) {
+          setSystem("Sync partiel - auto-correction active", "warn");
+          setTimeout(initApp, 3000);
+        }
+      }
+
+      function applyMode(mode) {
+        currentMode = mode;
+        document.body.classList.remove("mode-dg", "mode-responsable", "mode-vendeur");
+        document.body.classList.add("mode-" + mode);
+        renderMode(mode);
+        modeButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.mode === mode);
+        });
+      }
+
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => applyMode(btn.dataset.mode));
+      });
+
+      document.body.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-explain-type]");
+        if (!btn) return;
+        const t = btn.getAttribute("data-explain-type");
+        const i = parseInt(btn.getAttribute("data-explain-idx"), 10);
+        if (t === "priority") openExplainPriority(i);
+        else if (t === "alert") openExplainAlert(i);
+        else if (t === "reco") openExplainReco(i);
+      });
+      explainClose.addEventListener("click", closeExplain);
+      explainBackdrop.addEventListener("click", closeExplain);
+
+      debugController = PWS.DebugPanel.init({
+        getSnapshot: function () {
+          return {
+            mode: currentMode,
+            rawData: rawData,
+            lastIntelligence: lastIntelSnapshot ? lastIntelSnapshot.intel : null
+          };
+        },
+        toggleBtn: debugToggleBtn,
+        panel: document.getElementById("debugNatCorePanel"),
+        pre: document.getElementById("debugNatCorePre")
+      });
+
+      /* Exposition lecture seule pour audit / tests automatisés (pas de mock). */
+      window.__PWS_EXPORT = {
+        getRawData: function () {
+          return rawData;
+        },
+        getLastIntel: function () {
+          return lastIntelSnapshot;
+        }
+      };
+
+      applyMode("dg");
+      initApp();
+    })();
+  </script>
+</body>
+</html>

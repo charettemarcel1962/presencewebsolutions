@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Comparaison Strategique — MalikaFit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html { height: 100%; }
+
+body {
+    margin: 0 0 0 240px;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+    padding: 70px 20px 40px;
+    position: relative;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    width: 240px;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #0b0b0b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 10px;
+}
+
+.logo {
+    color: #ff4fa3;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 0.02em;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .icon svg {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255,255,255,0.6);
+    transition: fill 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 0 15px rgba(255,79,163,0.2);
+}
+
+.nav-item:hover .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item.active {
+    background: rgba(255,79,163,0.15);
+}
+
+.nav-item.active .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item .label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.lang-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 1px solid #ff4fa3;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background: #ff4fa3;
+    color: #000;
+}
+
+.fr { display: block; }
+.en { display: none; }
+
+.hero {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    color: #ff4fa3;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.hero p {
+    opacity: 0.8;
+    margin-top: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.card {
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255,79,163,0.3);
+    box-shadow: 0 0 20px rgba(255,79,163,0.15);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 0 40px rgba(255,79,163,0.7);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #ff4fa3;
+}
+
+.card p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.card ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.card li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.compare-table th,
+.compare-table td {
+    border: 1px solid rgba(255,79,163,0.28);
+    padding: 10px;
+    text-align: left;
+}
+
+.compare-table th {
+    color: #ff4fa3;
+}
+
+.path-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: center;
+}
+
+.path-col {
+    border: 1px solid rgba(255,79,163,0.28);
+    border-radius: 12px;
+    padding: 14px;
+    background: rgba(255,255,255,0.02);
+}
+
+.arrow {
+    color: #ff4fa3;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.phase-wrap {
+    display: grid;
+    gap: 10px;
+}
+
+.phase {
+    border: 1px solid rgba(255,79,163,0.28);
+    border-radius: 10px;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+}
+
+.final {
+    margin: 40px auto 0;
+    max-width: 1300px;
+    border: 1px solid rgba(255,79,163,0.3);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 35px rgba(255,79,163,0.25);
+    text-align: center;
+}
+
+.final h2 {
+    color: #ff4fa3;
+    margin: 0 0 16px;
+}
+
+.highlight {
+    margin-top: 16px;
+    color: #ff4fa3;
+    font-size: 20px;
+}
+
+@media (max-width: 820px) {
+    body {
+        margin: 0;
+        padding: 90px 16px 30px;
+    }
+
+    .sidebar {
+        position: static;
+        width: auto;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .sidebar nav {
+        gap: 2px;
+    }
+
+    .path-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .arrow {
+        text-align: center;
+        transform: rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="sidebar">
+    <div class="logo">MalikaFit</div>
+    <nav>
+        <a href="malikafit.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></span>
+            <span class="label fr">Accueil</span><span class="label en">Home</span>
+        </a>
+        <a href="bible.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+            <span class="label fr">Vision</span><span class="label en">Vision</span>
+        </a>
+        <a href="parametres.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+            <span class="label fr">Parametres</span><span class="label en">Settings</span>
+        </a>
+        <a href="cahier.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13v2H8V6zm0 6h13v2H8v-2zm0 6h13v2H8v-2zM3 6h2v2H3V6zm0 6h2v2H3v-2zm0 6h2v2H3v-2z"/></svg></span>
+            <span class="label fr">Cahier</span><span class="label en">Specs</span>
+        </a>
+        <a href="strategie.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg></span>
+            <span class="label fr">Strategie</span><span class="label en">Strategy</span>
+        </a>
+        <a href="comparaison.html" class="nav-item active">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5V3zm9 0h-5v18h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg></span>
+            <span class="label fr">Comparaison</span><span class="label en">Comparison</span>
+        </a>
+        <a href="ecosysteme.html" class="nav-item">
+            <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5zm0 9.5A1.5 1.5 0 1 0 12 8a1.5 1.5 0 0 0 0 3.5z"/></svg></span>
+            <span class="label fr">Ecosysteme</span><span class="label en">Ecosystem</span>
+        </a>
+    </nav>
+</div>
+
+<div class="lang-switch">
+    <button id="btnFR" type="button" onclick="setLang('fr')">FR</button>
+    <button id="btnEN" type="button" onclick="setLang('en')">EN</button>
+</div>
+
+<section class="hero">
+    <h1 class="fr">Deux facons d'avancer... une seule permet de passer au niveau superieur.</h1>
+    <h1 class="en">Two ways to move forward... only one takes you to the next level.</h1>
+    <p class="fr">Tu es deja performante.<br>Ce que tu vas decouvrir ici, c'est ce qui fait reellement la difference.</p>
+    <p class="en">You are already performing well.<br>What you will discover here is what truly makes the difference.</p>
+</section>
+
+<div class="grid">
+    <div class="card full">
+        <h2><span class="fr">Aujourd'hui, deux chemins existent</span><span class="en">Today, two paths exist</span></h2>
+        <p class="fr">Aujourd'hui, il existe deux facons de construire un business comme le tien.</p>
+        <p class="fr">La premiere consiste a travailler pour chaque client.</p>
+        <p class="fr">La seconde consiste a construire un systeme qui travaille avec toi.</p>
+        <p class="fr">Tu es deja dans la premiere... et tu es deja bonne.</p>
+        <p class="en">Today, there are two ways to build a business like yours.</p>
+        <p class="en">The first is working for every single client.</p>
+        <p class="en">The second is building a system that works with you.</p>
+        <p class="en">You are already in the first one... and you are already good.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Une reference qui fonctionne : Kimberly</span><span class="en">A working reference: Kimberly</span></h2>
+        <p class="fr">Kimberly n'a pas seulement un bon niveau. Elle s'appuie sur une structure claire.</p>
+        <ul class="fr">
+            <li>Acquisition organisee</li>
+            <li>Parcours client structure</li>
+            <li>Automatisations sur les taches repetitives</li>
+            <li>Suivi qui tourne meme sans presence constante</li>
+        </ul>
+        <p class="fr">Ce qui inspire ici, ce n'est pas la personne, c'est le systeme.</p>
+        <p class="en">Kimberly is not only good. She relies on a clear structure.</p>
+        <ul class="en">
+            <li>Organized acquisition</li>
+            <li>Structured client journey</li>
+            <li>Automation on repetitive tasks</li>
+            <li>Follow-up that runs without constant presence</li>
+        </ul>
+        <p class="en">What inspires here is not the person, it is the system.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Ta realite aujourd'hui</span><span class="en">Your reality today</span></h2>
+        <p class="fr">Tu as deja une base forte : clients, credibilite, experience terrain et resultat.</p>
+        <p class="fr">Ton niveau est la. Ta valeur est la. Mais la charge repose encore sur toi.</p>
+        <ul class="fr">
+            <li>Beaucoup de manuel</li>
+            <li>Des actions qui dependent de ton energie du jour</li>
+            <li>Croissance limitee par le temps disponible</li>
+        </ul>
+        <p class="en">You already have a strong base: clients, credibility, field experience and results.</p>
+        <p class="en">Your level is there. Your value is there. But the load still depends on you.</p>
+    </div>
+
+    <div class="card full">
+        <h2><span class="fr">La difference concrete</span><span class="en">The concrete difference</span></h2>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Kimberly</th>
+                    <th><span class="fr">Toi aujourd'hui</span><span class="en">You today</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="fr">Systeme structure</span><span class="en">Structured system</span></td><td><span class="fr">Fonctionnement humain</span><span class="en">Human-powered workflow</span></td></tr>
+                <tr><td><span class="fr">Automatisation</span><span class="en">Automation</span></td><td><span class="fr">Manuel</span><span class="en">Manual</span></td></tr>
+                <tr><td>24h/24</td><td><span class="fr">Depend de toi</span><span class="en">Depends on you</span></td></tr>
+                <tr><td><span class="fr">Multipliable</span><span class="en">Scalable</span></td><td><span class="fr">Limite</span><span class="en">Limited</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">Le probleme reel</span><span class="en">The real problem</span></h2>
+        <p class="fr">Le probleme n'est pas ton niveau.</p>
+        <p class="fr">Le probleme, c'est que tout repose encore sur toi.</p>
+        <p class="en">The problem is not your level.</p>
+        <p class="en">The problem is that everything still depends on you.</p>
+    </div>
+
+    <div class="card">
+        <h2><span class="fr">L'opportunite</span><span class="en">The opportunity</span></h2>
+        <p class="fr">Tu as deja une base solide.</p>
+        <p class="fr">Ce qui manque n'est pas le talent.</p>
+        <p class="fr">C'est la structure.</p>
+        <p class="en">You already have a solid base.</p>
+        <p class="en">What is missing is not talent.</p>
+        <p class="en">It is structure.</p>
+    </div>
+
+    <div class="card full">
+        <h2><span class="fr">Transformation : aujourd'hui vers demain</span><span class="en">Transformation: today to tomorrow</span></h2>
+        <div class="path-grid">
+            <div class="path-col">
+                <h3><span class="fr">Aujourd'hui</span><span class="en">Today</span></h3>
+                <ul>
+                    <li><span class="fr">Charge mentale elevee</span><span class="en">High mental load</span></li>
+                    <li><span class="fr">Execution manuelle</span><span class="en">Manual execution</span></li>
+                    <li><span class="fr">Croissance contrainte</span><span class="en">Constrained growth</span></li>
+                </ul>
+            </div>
+            <div class="arrow">→</div>
+            <div class="path-col">
+                <h3><span class="fr">Demain</span><span class="en">Tomorrow</span></h3>
+                <ul>
+                    <li><span class="fr">Systeme clair</span><span class="en">Clear system</span></li>
+                    <li><span class="fr">Suivi automatise</span><span class="en">Automated follow-up</span></li>
+                    <li><span class="fr">Croissance continue</span><span class="en">Continuous growth</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card full">
+        <h2><span class="fr">Le chemin</span><span class="en">The path</span></h2>
+        <div class="phase-wrap">
+            <div class="phase"><strong><span class="fr">Phase 1</span><span class="en">Phase 1</span></strong> - <span class="fr">Structuration</span><span class="en">Structure</span></div>
+            <div class="phase"><strong><span class="fr">Phase 2</span><span class="en">Phase 2</span></strong> - <span class="fr">Automatisation</span><span class="en">Automation</span></div>
+            <div class="phase"><strong><span class="fr">Phase 3</span><span class="en">Phase 3</span></strong> - <span class="fr">Acquisition et croissance</span><span class="en">Acquisition and growth</span></div>
+        </div>
+    </div>
+</div>
+
+<section class="final">
+    <h2 class="fr">Conclusion</h2>
+    <h2 class="en">Conclusion</h2>
+    <p class="fr">Kimberly n'est pas inaccessible.</p>
+    <p class="fr">Elle a construit un systeme.</p>
+    <p class="fr">Toi, tu peux faire la meme chose.</p>
+    <p class="highlight fr">Tu es deja a mi-chemin.</p>
+    <p class="en">Kimberly is not unreachable.</p>
+    <p class="en">She built a system.</p>
+    <p class="en">You can do the same.</p>
+    <p class="highlight en">You are already halfway there.</p>
+</section>
+
+<script>
+function setLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+}
+
+function applyLang(lang) {
+    document.querySelectorAll(".fr").forEach(el => el.style.display = (lang === "fr") ? "block" : "none");
+    document.querySelectorAll(".en").forEach(el => el.style.display = (lang === "en") ? "block" : "none");
+
+    const btnFR = document.getElementById("btnFR");
+    const btnEN = document.getElementById("btnEN");
+    if (btnFR && btnEN) {
+        btnFR.classList.remove("active");
+        btnEN.classList.remove("active");
+        if (lang === "fr") btnFR.classList.add("active");
+        else btnEN.classList.add("active");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem("lang") || "fr";
+    applyLang(lang);
+});
+</script>
+
+</body>
+</html>

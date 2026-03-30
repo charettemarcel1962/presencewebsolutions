@@ -1,0 +1,810 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cahier de charges — MalikaFit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+html { height: 100%; }
+
+body {
+    margin: 0 0 0 240px;
+    min-height: 100%;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1a1a1a, #000);
+    color: white;
+    padding: 70px 20px 40px;
+    position: relative;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    width: 240px;
+    height: 100vh;
+    box-sizing: border-box;
+    background: #0b0b0b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 10px;
+}
+
+.logo {
+    color: #ff4fa3;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 40px;
+    letter-spacing: 0.02em;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 6px 8px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sidebar .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.sidebar .icon svg {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255,255,255,0.6);
+    transition: fill 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.04);
+    transform: translateX(4px);
+    box-shadow: 0 0 15px rgba(255,79,163,0.2);
+}
+
+.nav-item:hover .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item.active {
+    background: rgba(255,79,163,0.15);
+}
+
+.nav-item.active .icon svg {
+    fill: #ff4fa3;
+}
+
+.nav-item .label {
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+.lang-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 300;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 1px solid #ff4fa3;
+    color: white;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background: #ff4fa3;
+    color: #000;
+}
+
+.fr { display: block; }
+.en { display: none; }
+
+h1 {
+    text-align: center;
+    color: #ff4fa3;
+    margin-bottom: 50px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.card {
+    position: relative;
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(255,79,163,0.3);
+    box-shadow: 0 0 20px rgba(255,79,163,0.15);
+    transition: 0.3s;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 35px rgba(255,79,163,0.6);
+}
+
+.card h2 {
+    color: #ff4fa3;
+}
+
+.card p {
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin: 0 0 12px;
+}
+
+.card p:last-child {
+    margin-bottom: 0;
+}
+
+.details {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+    padding: 20px;
+    font-size: 13px;
+    transition: 0.4s;
+    line-height: 1.6;
+    box-sizing: border-box;
+}
+
+.details p {
+    margin: 0 0 10px;
+}
+
+.details p:last-child {
+    margin-bottom: 0;
+}
+
+.card:hover .details {
+    bottom: 0;
+}
+
+@keyframes glowPulse {
+    0% { box-shadow: 0 0 20px rgba(255,79,163,0.3); }
+    50% { box-shadow: 0 0 60px rgba(255,79,163,0.9); }
+    100% { box-shadow: 0 0 20px rgba(255,79,163,0.3); }
+}
+
+.card.expansion {
+    border: 2px solid #ff4fa3;
+    box-shadow: 0 0 30px rgba(255,79,163,0.4);
+    animation: glowPulse 3s infinite;
+}
+
+.hint {
+    display: block;
+    margin-top: 10px;
+    opacity: 0.7;
+    font-size: 13px;
+}
+
+.full {
+    grid-column: span 3;
+}
+
+@media (max-width: 900px) {
+    .full {
+        grid-column: span 1;
+    }
+}
+
+.expansion.full {
+    padding: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 160px;
+}
+
+#expansionOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #111, #000);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.5s ease;
+    box-sizing: border-box;
+}
+
+#expansionOverlay .expansionContent {
+    position: relative;
+    max-width: 960px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+    padding: 48px 40px 40px;
+    animation: zoomIn 0.6s ease;
+    box-sizing: border-box;
+}
+
+#expansionOverlay .closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #ff4fa3;
+    z-index: 2;
+}
+
+#expansionOverlay .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 30px 0 0;
+    max-width: none;
+    width: 100%;
+    text-align: left;
+}
+
+@media (max-width: 700px) {
+    #expansionOverlay .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+#expansionOverlay .block {
+    background: rgba(255,255,255,0.03);
+    padding: 20px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#expansionOverlay .block:hover {
+    background: rgba(255,79,163,0.08);
+    transform: translateY(-5px);
+}
+
+#expansionOverlay .block h3 {
+    color: #ff4fa3;
+    margin: 0 0 12px;
+    font-size: 1rem;
+}
+
+#expansionOverlay .block p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+#expansionOverlay .intro {
+    font-size: 18px;
+    margin: 20px 0;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+#expansionOverlay .final {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 20px;
+    color: #ff4fa3;
+    line-height: 1.5;
+}
+
+#expansionOverlay h1 {
+    margin: 0 0 16px;
+    font-size: 1.75rem;
+}
+
+#expansionOverlay h2 {
+    margin: 0 0 24px;
+    font-size: 1.25rem;
+    color: #fff;
+    font-weight: normal;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.95); }
+    to { transform: scale(1); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <div class="logo">MalikaFit</div>
+
+    <nav>
+
+        <a href="malikafit.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12l9-9 9 9v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>
+            </span>
+            <span class="label fr">Accueil</span>
+            <span class="label en">Home</span>
+        </a>
+
+        <a href="bible.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </span>
+            <span class="label fr">Vision</span>
+            <span class="label en">Vision</span>
+        </a>
+
+        <a href="parametres.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V12a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </span>
+            <span class="label fr">Paramètres</span>
+            <span class="label en">Settings</span>
+        </a>
+
+        <a href="cahier.html" class="nav-item active">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13v2H8V6zm0 6h13v2H8v-2zm0 6h13v2H8v-2zM3 6h2v2H3V6zm0 6h2v2H3v-2zm0 6h2v2H3v-2z"/></svg>
+            </span>
+            <span class="label fr">Cahier</span>
+            <span class="label en">Specs</span>
+        </a>
+
+        <a href="strategie.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/></svg>
+            </span>
+            <span class="label fr">Strategie</span>
+            <span class="label en">Strategy</span>
+        </a>
+
+        <a href="comparaison.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5V3zm9 0h-5v18h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/></svg>
+            </span>
+            <span class="label fr">Comparaison</span>
+            <span class="label en">Comparison</span>
+        </a>
+
+        <a href="ecosysteme.html" class="nav-item">
+            <span class="icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 5 5 3-5 3-3 5-3-5-5-3 5-3 3-5zm0 9.5A1.5 1.5 0 1 0 12 8a1.5 1.5 0 0 0 0 3.5z"/></svg>
+            </span>
+            <span class="label fr">Ecosysteme</span>
+            <span class="label en">Ecosystem</span>
+        </a>
+
+    </nav>
+
+</div>
+
+<div class="lang-switch">
+<button id="btnFR" type="button" onclick="setLang('fr')">FR</button>
+<button id="btnEN" type="button" onclick="setLang('en')">EN</button>
+</div>
+
+<h1>
+<span class="fr">📋 Vision Produit — MalikaFit</span>
+<span class="en">📋 Product Vision — MalikaFit</span>
+</h1>
+
+<div class="grid">
+
+<div class="card expansion full">
+
+<h2>🚀 Expansion MalikaFit</h2>
+
+<p class="fr">Transformer ton coaching en plateforme</p>
+<p class="en">Turn your coaching into a platform</p>
+
+<span class="hint fr">👉 Survole pour découvrir</span>
+<span class="hint en">👉 Hover to discover</span>
+
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">👥 Gestion des clients</span>
+<span class="en">👥 Client management</span>
+</h2>
+<p class="fr">Ce module permettra de centraliser toutes les informations importantes sur tes clients afin que tu n’aies plus jamais à chercher dans plusieurs outils différents.</p>
+<p class="en">This module will centralize all key information about your clients so you never have to search across multiple tools again.</p>
+<div class="details">
+<p class="fr">Concrètement, tu pourras voir en quelques secondes le profil complet d’un client, ses objectifs, son historique, ses progrès et tes notes personnelles.</p>
+<p class="fr">Par exemple, si un client revient après quelques semaines, tu sauras immédiatement où il en était, sans perdre de temps.</p>
+<p class="fr">Cela te permet d’offrir un service beaucoup plus professionnel et personnalisé.</p>
+<p class="en">In practice, you’ll be able to view a complete client profile in seconds: goals, history, progress, and your personal coaching notes.</p>
+<p class="en">For example, when a client comes back after a few weeks, you’ll immediately know where they left off—so you don’t waste time.</p>
+<p class="en">This helps you deliver a far more professional and highly personalized service.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🏋️ Coaching fitness</span>
+<span class="en">🏋️ Fitness coaching</span>
+</h2>
+<p class="fr">Ce module est au cœur de ton activité. Il te permet de créer, suivre et ajuster les programmes d’entraînement de tes clients.</p>
+<p class="en">This module is at the heart of your business. It lets you create, track, and adjust training programs for your clients.</p>
+<div class="details">
+<p class="fr">Tu pourras créer des programmes standards ou entièrement personnalisés.</p>
+<p class="fr">Par exemple, un client débutant pourrait recevoir un programme simple, tandis qu’un client avancé aurait un suivi plus détaillé.</p>
+<p class="fr">Tu pourras également ajuster les programmes en fonction des résultats, ce qui améliore la satisfaction et les résultats de tes clients.</p>
+<p class="en">You can create standard or fully customized programs.</p>
+<p class="en">For example, a beginner might receive a simple plan, while an advanced client gets a more detailed follow-up.</p>
+<p class="en">You can also adapt programs based on results, which improves client satisfaction and outcomes.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🥗 Nutrition</span>
+<span class="en">🥗 Nutrition</span>
+</h2>
+<p class="fr">La nutrition devient une extension naturelle de ton coaching, te permettant d’augmenter la valeur de tes services.</p>
+<p class="en">Nutrition becomes a natural extension of your coaching, allowing you to increase the value of your services.</p>
+<div class="details">
+<p class="fr">Tu pourras proposer des plans alimentaires personnalisés ou standards.</p>
+<p class="fr">Par exemple, un client en perte de poids recevra un plan différent d’un client en prise de masse.</p>
+<p class="fr">Ce module peut aussi devenir une source de revenus supplémentaire en vendant ces plans séparément.</p>
+<p class="en">You can offer personalized or standard meal plans.</p>
+<p class="en">For example, a weight-loss client will get a different plan than a muscle-gain client.</p>
+<p class="en">This module can also become an additional revenue stream by selling these plans separately.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🎥 Vidéos & contenu</span>
+<span class="en">🎥 Videos & content</span>
+</h2>
+<p class="fr">Ce module te permet de créer du contenu réutilisable et générer des revenus même sans être présente.</p>
+<p class="en">This module lets you create reusable content and generate revenue even when you’re not physically there.</p>
+<div class="details">
+<p class="fr">Tu pourras vendre des programmes vidéo complets ou donner accès à du contenu premium.</p>
+<p class="fr">Par exemple, un client pourrait acheter un programme de 30 jours directement sur ton site.</p>
+<p class="fr">Cela transforme ton temps en produit, ce qui permet de scaler ton business.</p>
+<p class="en">You can sell complete video programs or grant access to premium content.</p>
+<p class="en">For example, a client could buy a 30-day program directly from your site.</p>
+<p class="en">Turning your time into a product allows you to scale your business.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">💰 Paiements</span>
+<span class="en">💰 Payments</span>
+</h2>
+<p class="fr">Ce module assure la gestion simple et automatisée de tes revenus.</p>
+<p class="en">This module ensures simple, automated management of your income.</p>
+<div class="details">
+<p class="fr">Tu pourras gérer les abonnements mensuels, les paiements uniques et suivre les retards.</p>
+<p class="fr">Par exemple, si un client oublie de payer, le système peut envoyer une relance automatiquement.</p>
+<p class="fr">Cela sécurise tes revenus et réduit les oublis.</p>
+<p class="en">You can manage monthly subscriptions, one-off payments, and track late payments.</p>
+<p class="en">For example, if a client forgets to pay, the system can send an automatic reminder.</p>
+<p class="en">This protects your revenue and reduces missed payments.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📊 Pipeline & ventes</span>
+<span class="en">📊 Pipeline & sales</span>
+</h2>
+<p class="fr">Ce module te permet de transformer tes prospects en clients de manière structurée.</p>
+<p class="en">This module helps you turn prospects into clients in a structured way.</p>
+<div class="details">
+<p class="fr">Tu pourras suivre chaque prospect depuis le premier contact jusqu’à la signature.</p>
+<p class="fr">Par exemple, voir qui t’a écrit, qui est intéressé et qui est prêt à acheter.</p>
+<p class="fr">Cela te permet de ne plus perdre de clients potentiels.</p>
+<p class="en">You can follow every prospect from the first contact to the signature.</p>
+<p class="en">For example, see who messaged you, who’s interested, and who is ready to buy.</p>
+<p class="en">This way you stop losing potential clients.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📅 Calendrier</span>
+<span class="en">📅 Calendar</span>
+</h2>
+<p class="fr">Permet de gérer tes rendez-vous sans confusion ni perte de temps.</p>
+<p class="en">Manage your appointments without confusion or wasted time.</p>
+<div class="details">
+<p class="fr">Les clients peuvent réserver des séances selon tes disponibilités.</p>
+<p class="fr">Tu peux gérer les annulations, les retards et les absences.</p>
+<p class="fr">Cela structure ton horaire et évite les oublis.</p>
+<p class="en">Clients can book sessions based on your availability.</p>
+<p class="en">You can manage cancellations, late arrivals, and no-shows.</p>
+<p class="en">This structures your schedule and prevents forgotten appointments.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🔁 Rétention client</span>
+<span class="en">🔁 Client retention</span>
+</h2>
+<p class="fr">Ce module t’aide à garder tes clients plus longtemps et augmenter leur valeur.</p>
+<p class="en">This module helps you keep clients longer and increase their value.</p>
+<div class="details">
+<p class="fr">Le système peut détecter l’inactivité et déclencher des relances.</p>
+<p class="fr">Par exemple, si un client n’est plus actif depuis 5 jours, tu peux être alertée.</p>
+<p class="fr">Cela évite de perdre des clients sans t’en rendre compte.</p>
+<p class="en">The system can detect inactivity and trigger follow-ups.</p>
+<p class="en">For example, if a client hasn’t been active for 5 days, you’ll get an alert.</p>
+<p class="en">This prevents losing clients without noticing.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">📈 Dashboard business</span>
+<span class="en">📈 Business dashboard</span>
+</h2>
+<p class="fr">Un tableau de bord clair pour comprendre ton activité en un coup d’œil.</p>
+<p class="en">A clear dashboard so you can understand your activity at a glance.</p>
+<div class="details">
+<p class="fr">Tu verras ton nombre de clients, tes revenus et ta performance.</p>
+<p class="fr">Par exemple, savoir immédiatement combien tu as généré ce mois-ci.</p>
+<p class="fr">Cela te permet de prendre de meilleures décisions.</p>
+<p class="en">You’ll see your number of clients, revenue, and performance.</p>
+<p class="en">For example, know immediately how much you generated this month.</p>
+<p class="en">This helps you make better decisions.</p>
+</div>
+</div>
+
+<div class="card">
+<h2>
+<span class="fr">🧠 Automatisation</span>
+<span class="en">🧠 Automation</span>
+</h2>
+<p class="fr">Permet de réduire ton travail manuel et gagner du temps.</p>
+<p class="en">Reduces manual work and saves you time.</p>
+<div class="details">
+<p class="fr">Relances automatiques, rappels, notifications…</p>
+<p class="fr">Par exemple, envoyer automatiquement un message après une séance.</p>
+<p class="fr">Cela te permet de te concentrer sur ce qui compte vraiment.</p>
+<p class="en">Automatic follow-ups, reminders, notifications…</p>
+<p class="en">For example, send a message automatically after a session.</p>
+<p class="en">This lets you focus on what really matters.</p>
+</div>
+</div>
+
+</div>
+
+<div id="expansionOverlay">
+
+    <div class="expansionContent">
+
+        <div class="closeBtn" onclick="closeExpansion()">✕</div>
+
+        <div class="fr">
+
+            <h1>🚀 Expansion MalikaFit</h1>
+            <h2>De Coach à Plateforme</h2>
+
+            <div class="intro">
+            Aujourd’hui, tu gères des clients.<br>
+            Demain, tu peux gérer un réseau complet de coachs.
+            </div>
+
+            <div class="grid">
+
+            <div class="block">
+            <h3>👥 Scénario réel</h3>
+            <p>
+            Imagine une amie coach à domicile. Tu lui ouvres un accès.<br>
+            Elle obtient instantanément ses clients, ses programmes et son espace.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>⚙️ Structure</h3>
+            <p>
+            Chaque coach est totalement indépendant.<br>
+            Mais tous utilisent ton système centralisé.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>💰 Revenus</h3>
+            <p>
+            Abonnements, accès plateforme, revenus récurrents.<br>
+            Ton système génère de l’argent.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>📈 Impact</h3>
+            <p>
+            Tu passes d’un revenu basé sur ton temps<br>
+            à un système scalable.
+            </p>
+            </div>
+
+            </div>
+
+            <div class="final">
+            💣 Tu construis une plateforme qui travaille pour toi.
+            </div>
+
+        </div>
+
+        <div class="en">
+
+            <h1>🚀 MalikaFit Expansion</h1>
+            <h2>From Coach to Platform</h2>
+
+            <div class="intro">
+            Today you manage clients.<br>
+            Tomorrow you manage a network.
+            </div>
+
+            <div class="grid">
+
+            <div class="block">
+            <h3>👥 Scenario</h3>
+            <p>
+            Give access to another coach.<br>
+            She gets her clients and system instantly.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>⚙️ Structure</h3>
+            <p>
+            Independent accounts, shared platform.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>💰 Revenue</h3>
+            <p>
+            Subscriptions and recurring income.
+            </p>
+            </div>
+
+            <div class="block">
+            <h3>📈 Impact</h3>
+            <p>
+            From time-based income to scalable system.
+            </p>
+            </div>
+
+            </div>
+
+            <div class="final">
+            💣 You build a platform that works for you.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function setLang(lang) {
+    localStorage.setItem("lang", lang);
+    applyLang(lang);
+}
+
+function applyLang(lang) {
+    document.querySelectorAll('.fr').forEach(el => el.style.display = (lang === 'fr') ? 'block' : 'none');
+    document.querySelectorAll('.en').forEach(el => el.style.display = (lang === 'en') ? 'block' : 'none');
+
+    const img = document.getElementById('mainImage');
+    if (img) {
+        img.src = (lang === 'fr') ? 'home.png' : 'home1.png';
+    }
+
+    const btnFR = document.getElementById('btnFR');
+    const btnEN = document.getElementById('btnEN');
+    if (btnFR && btnEN) {
+        btnFR.classList.remove('active');
+        btnEN.classList.remove('active');
+        if (lang === 'fr') btnFR.classList.add('active');
+        else btnEN.classList.add('active');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const lang = localStorage.getItem("lang") || "fr";
+    applyLang(lang);
+
+    const expansionCard = document.querySelector(".expansion");
+    const overlay = document.getElementById("expansionOverlay");
+
+    if (expansionCard && overlay) {
+
+        // 🔥 HOVER = VISUEL SEULEMENT
+        expansionCard.addEventListener("mouseenter", () => {
+            expansionCard.classList.add("hovered");
+        });
+
+        expansionCard.addEventListener("mouseleave", () => {
+            expansionCard.classList.remove("hovered");
+        });
+
+        // 💣 CLICK = OUVERTURE (CORRECTION PRINCIPALE)
+        expansionCard.addEventListener("click", () => {
+            openExpansion();
+        });
+    }
+
+    // ✅ FERMETURE SI CLICK À L’EXTÉRIEUR
+    overlay.addEventListener("click", function(e) {
+        if (e.target === this) {
+            closeExpansion();
+        }
+    });
+
+});
+
+// 🚀 OPEN
+function openExpansion() {
+    document.getElementById("expansionOverlay").style.display = "flex";
+}
+
+// ❌ CLOSE
+function closeExpansion() {
+    document.getElementById("expansionOverlay").style.display = "none";
+}
+
+// ⌨️ ESC KEY
+document.addEventListener("keydown", function (e) {
+    const overlay = document.getElementById("expansionOverlay");
+    if (e.key === "Escape" && overlay.style.display === "flex") {
+        closeExpansion();
+    }
+});
+
+</script>
+
+</body>
+</html>
