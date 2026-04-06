@@ -1,1 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Céra-Bec CRM — Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar" aria-label="Navigation principale">
+        <div class="sidebar-brand">
+          <div class="sidebar-logo">
+            <img src="assets/logo.png" alt="Céra-Bec" decoding="async" />
+          </div>
+        </div>
+        <!-- Nav : … modules CRM, Manuel, Espace Karine (bas) -->
+        <nav class="sidebar-nav" id="sidebarNav"></nav>
+      </aside>
 
+      <div class="main-wrap">
+        <header class="top-header">
+          <div class="header-left">
+            <div class="title main-header-titles">
+              <span class="main-view-title" id="mainViewTitle">Présentation</span>
+              <span class="subtitle">Powered by NatCORE</span>
+            </div>
+          </div>
+            <div class="header-right">
+            <div class="narration-controls" id="narrationControls" aria-label="Narration vocale">
+              <span class="narration-mic" aria-hidden="true">🎙️</span>
+              <button type="button" class="narration-btn" id="narration-play" title="Lire la page">Play</button>
+              <button type="button" class="narration-btn" id="narration-pause" title="Pause" aria-label="Pause">⏸️</button>
+              <button type="button" class="narration-btn" id="narration-resume" title="Reprendre" aria-label="Reprendre">▶️</button>
+              <button type="button" class="narration-btn" id="narration-stop" title="Arrêter" aria-label="Arrêter">⏹️</button>
+              <button type="button" class="narration-btn narration-btn-secondary" id="narration-read-presentation" title="Lire le rôle du module de la page affichée (ou la présentation sur l’onglet Présentation)">
+                Lire la présentation
+              </button>
+              <span class="narration-status" id="narration-status" aria-live="polite">Narration prête</span>
+            </div>
+            <div id="narrationLivePanel" class="narration-live-panel is-hidden" aria-live="polite" aria-atomic="true">
+              <div class="narration-live-label">Lecture en cours</div>
+              <div id="narrationLiveTitle" class="narration-live-title"></div>
+              <div id="narrationLiveText" class="narration-live-text"></div>
+            </div>
+            <span class="badge-demo">DEMO MODE</span>
+            <time class="header-clock" id="headerClock" datetime=""></time>
+          </div>
+        </header>
+
+        <main class="content" id="mainContent" role="main"></main>
+      </div>
+    </div>
+
+    <div
+      id="marcelIAAssistant"
+      role="button"
+      tabindex="0"
+      aria-label="Marcel_IA — lire le rôle du module ou la présentation"
+      title="Marcel_IA — narration"
+    >
+      <img src="assets/marcel_ia.png" alt="Marcel_IA" width="70" height="70" decoding="async" />
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
