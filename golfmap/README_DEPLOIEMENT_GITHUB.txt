@@ -18,6 +18,6 @@ NOTES
 -----
 - Aucun backend : données simulées (REACT_APP_GOLFMAP_DEMO_STATIC au build).
 - 404.html = copie de index.html pour le routage SPA sur GitHub Pages.
-- PUBLIC_URL + REACT_APP_GOLFMAP_GITHUB_BASE au build : /presencewebsolutions/golfmap (assets + basename React Router).
+- PUBLIC_URL + REACT_APP_GOLFMAP_GITHUB_BASE + REACT_APP_API_URL au build : préfixe /presencewebsolutions/golfmap (assets, basename, base API même origine ; trafic réel bloqué par adaptateur démo).
 
 Généré par : frontend/scripts/copy-demo-delivery.cjs
