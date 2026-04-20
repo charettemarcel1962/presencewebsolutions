@@ -1,18 +1,12 @@
-GolfMAP — URL à utiliser (obligatoire)
+GolfMAP — URL à utiliser (HashRouter)
 ============================
 
-L’application est publiée SOUS un sous-dossier, pas à la racine du domaine.
+Accueil (copier-coller) :
+https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/
 
-Ouvrir EXACTEMENT (copier-coller) :
-https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/
+Connexion :
+https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/login
 
-Ne PAS utiliser :
-- https://VOTRE_USER.github.io/login  → 404 (il n’y a pas d’app à la racine)
-- une URL sans /presencewebsolutions/golfmap/
-
-Après chargement, la page Connexion est par exemple :
-https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/login
-
-Vérifier aussi l’orthographe du compte GitHub dans l’URL (ex. charrettemarcel1962).
+Si vous ouvrez encore …/golfmap/login (sans #), le fichier login/index.html redirige vers #/login.
 
 Fichier généré par copy-demo-delivery.cjs

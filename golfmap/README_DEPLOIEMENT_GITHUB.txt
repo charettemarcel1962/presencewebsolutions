@@ -3,11 +3,10 @@ GolfMAP — démo statique (GitHub Pages)
 
 Contenu : build exporté (index.html, static/, assets).
 
-!!! URL OBLIGATOIRE (sinon 404 « Site not found ») !!!
-L’app n’existe PAS à https://VOTRE_USER.github.io/login
-Utiliser le CHEMIN COMPLET, par exemple :
-https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/
-Puis Connexion : …/golfmap/login (voir aussi LISEZMOI_URL.txt dans ce dossier).
+Routage GitHub Pages : HashRouter (démo statique).
+Entrée : https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/
+Connexion : https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/login
+(L’URL sans hash …/golfmap/login redirige via le dossier login/ livré.)
 
 DÉPLOIEMENT RAPIDE
 ------------------
@@ -22,7 +21,7 @@ Option racine user.github.io : dossier delivery/GithubPages_UserSite_Root_Redire
 NOTES
 -----
 - Aucun backend : données simulées (REACT_APP_GOLFMAP_DEMO_STATIC au build).
-- 404.html = copie de index.html pour le routage SPA sur GitHub Pages (uniquement sous /presencewebsolutions/golfmap/).
+- 404.html = copie de index.html ; login/index.html = redirection vers #/login si ancien lien.
 - PUBLIC_URL + REACT_APP_GOLFMAP_GITHUB_BASE + REACT_APP_API_URL au build : préfixe /presencewebsolutions/golfmap (assets, basename, base API même origine ; trafic réel bloqué par adaptateur démo).
 
 Généré par : frontend/scripts/copy-demo-delivery.cjs
