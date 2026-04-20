@@ -1,0 +1,12 @@
+GolfMAP — URL à utiliser (HashRouter)
+============================
+
+Accueil (copier-coller) :
+https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/
+
+Connexion :
+https://charrettemarcel1962.github.io/presencewebsolutions/golfmap/#/login
+
+Si vous ouvrez encore …/golfmap/login (sans #), le fichier login/index.html redirige vers #/login.
+
+Fichier généré par copy-demo-delivery.cjs
