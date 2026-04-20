@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/presencewebsolutions/golfmap/static/css/main.4897f90f.css",
+    "main.js": "/presencewebsolutions/golfmap/static/js/main.43c18f3d.js",
+    "static/media/image_de_fond.png": "/presencewebsolutions/golfmap/static/media/image_de_fond.2957a60b875220aceaf1.png",
+    "index.html": "/presencewebsolutions/golfmap/index.html",
+    "main.4897f90f.css.map": "/presencewebsolutions/golfmap/static/css/main.4897f90f.css.map",
+    "main.43c18f3d.js.map": "/presencewebsolutions/golfmap/static/js/main.43c18f3d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4897f90f.css",
+    "static/js/main.43c18f3d.js"
+  ]
+}
